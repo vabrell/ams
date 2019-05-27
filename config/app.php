@@ -41,6 +41,24 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'LDAP_PASSWORD'
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'LDAP_PASSWORD'
+        ],
+
+        '_POST' => [
+            'password'
+        ]
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
