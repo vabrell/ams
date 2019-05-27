@@ -73,6 +73,9 @@ return [
 
         // Adldap\Laravel\Validation\Rules\OnlyImported::class,
 
+        App\Rules\IsSoltakInfra::class,
+        App\Rules\IsSoltakServicedesk::class,
+
     ],
 
     /*
@@ -98,6 +101,10 @@ return [
         // Only allows users with a uid to authenticate.
         // Suitable when using OpenLDAP.
         // Adldap\Laravel\Scopes\UidScope::class,
+
+
+        // App\Scopes\SoltakServicedeskScope::class,
+        // App\Scopes\SoltakInfraScope::class,
 
     ],
 

@@ -2,12 +2,17 @@
 
 namespace App;
 
+use App\Rules\IsSoltakInfra;
+use Adldap\Laravel\Traits\HasLdapUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
+    use HasLdapUser;
+
     use Notifiable;
 
     /**
@@ -36,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        return $this->ldap->inGroup(env('SOLTAK_INFRA_ACCESS_GROUP'));
+    }
 }

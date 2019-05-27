@@ -17,11 +17,18 @@
                             <div class="col-md-6">
                                 <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
+                                @if (Session::has('error.ldap'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ Session::get('error.ldap') }}</strong>
+                                    </span>
+                                @else
+
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                @endif
                             </div>
                         </div>
 
