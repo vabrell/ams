@@ -20,6 +20,8 @@ Auth::routes([
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::post('/neptune/contracts', 'ContractsController@store');
+Route::patch('/neptune/contracts/{contract}', 'ContractsController@update');
+Route::delete('/neptune/contracts/{contract}', 'ContractsController@destroy');
 
 Route::resource('accounts', 'AccountsController');
 
