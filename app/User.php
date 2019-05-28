@@ -42,8 +42,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    /* # Helpers # */
     public function isAdmin()
     {
         return $this->ldap->inGroup(env('ADMIN_ACCESS_GROUP'));
+    }
+
+    public function isHR()
+    {
+        if($this->isAdmin())
+            return true;
+
+        return $this->ldap->inGroup(env('HR_ACCESS_GROUP'));
     }
 }

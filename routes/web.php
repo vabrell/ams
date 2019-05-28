@@ -19,6 +19,8 @@ Auth::routes([
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/neptune', 'NeptuneController@index')->name('neptune.index');
+
 Route::post('/neptune/contracts', 'NeptuneContractsController@store');
 Route::patch('/neptune/contracts/{contract}', 'NeptuneContractsController@update');
 Route::delete('/neptune/contracts/{contract}', 'NeptuneContractsController@destroy');

@@ -6,6 +6,12 @@
                 <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
             </li>
 
+            @if (auth()->user()->isHR())
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('neptune.index') }}">{{ __('Neptune') }}</a>
+                </li>
+            @endif
+
             @if (auth()->user()->isAdmin())
                 <li class="nav-item">
                     <a class="nav-link" href="#">{{ __('Inställningar') }}</a>
