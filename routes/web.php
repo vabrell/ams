@@ -21,14 +21,16 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/neptune', 'NeptuneController@index')->name('neptune.index');
 
-Route::post('/neptune/contracts', 'NeptuneContractsController@store');
+Route::get('/neptune/contracts/create', 'NeptuneContractsController@create')->name('neptune.contracts.create');
+Route::post('/neptune/contracts', 'NeptuneContractsController@store')->name('neptune.contracts.store');
 Route::patch('/neptune/contracts/{contract}', 'NeptuneContractsController@update');
 Route::delete('/neptune/contracts/{contract}', 'NeptuneContractsController@destroy');
 
+Route::get('/neptune/roles/create', 'NeptuneRolesController@create')->name('neptune.roles.create');
 Route::post('neptune/roles', 'NeptuneRolesController@store');
 Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update');
 Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy');
 
-Route::resource('accounts', 'AccountsController');
+// Route::resource('accounts', 'AccountsController');
 
 

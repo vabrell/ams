@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class NeptuneContractsController extends Controller
 {
+    public function create()
+    {
+        // Return create view
+        return view('neptune.contracts.create');
+    }
+
     public function store()
     {
         // Validate the contract request and then store it in the database
