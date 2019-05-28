@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class NeptuneContractsController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
     public function create()
     {
         // Return create view
@@ -16,7 +21,9 @@ class NeptuneContractsController extends Controller
     public function store()
     {
         // Validate the contract request and then store it in the database
-        NeptuneContract::create($this->validateRequest());
+        $contract = NeptuneContract::create($this->validateRequest());
+
+        return redirect()->route('neptune.index');
     }
 
     public function update(NeptuneContract $contract)
@@ -34,7 +41,7 @@ class NeptuneContractsController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'number' => 'required|integer|sometimes',
+            'code' => 'required|unique:neptune_contracts|sometimes',
             'name' => 'required|sometimes',
             'role_id' => 'required|sometimes'
         ]);

@@ -73,8 +73,7 @@ return [
 
         // Adldap\Laravel\Validation\Rules\OnlyImported::class,
 
-        App\Rules\IsAdmin::class,
-        App\Rules\IsServicedesk::class,
+        App\Rules\IsAllowedLogin::class,
 
     ],
 

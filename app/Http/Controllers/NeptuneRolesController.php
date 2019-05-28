@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class NeptuneRolesController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
     public function store()
     {
         // Validate the role request and store in the database

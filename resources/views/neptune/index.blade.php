@@ -21,6 +21,13 @@
                                 <span class="h4">Avtal</span>
                                 <a href="{{ route('neptune.contracts.create') }}" class="btn btn-sm btn-primary ml-3 mb-2">Nytt avtal</a>
                             </div>
+                            <div class="mt-3">
+                                @foreach ($contracts as $contract)
+                                    <p>
+                                    <a href="{{ $contract->path() }}" class="text-decoration-none" >{{ $contract->code }} - {{ $contract->name }}</a>
+                                    </p>
+                                @endforeach
+                            </div>
                         </div>
 
                         <div class="col-lg-6">

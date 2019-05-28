@@ -12,17 +12,16 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="number" class="col-md-4 col-form-label text-md-right">{{ __('Avtals nummer') }}</label>
+                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ __('Avtals kod') }}</label>
 
                             <div class="col-md-6">
-                                <input id="number" type="number" class="form-control @error('number') is-invalid @enderror" name="number" value="{{ old('number') }}" required autocomplete="number" autofocus>
+                                <input id="code" type="code" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" autofocus>
 
-                                @error('number')
+                                @error('code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                @endif
                             </div>
                         </div>
 
@@ -30,7 +29,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Avtals namn') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="current-name">
+                                <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" >
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

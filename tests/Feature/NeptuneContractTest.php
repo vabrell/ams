@@ -23,11 +23,16 @@ class NeptuneContractTest extends TestCase
         // Try to create a new contract trhough route
         $response = $this->createContract();
 
+        // Check if user is redirected to neptune
+        $response->assertRedirect('/neptune');
+
         // Check if respone return OK
-        $response->assertOK();
+        // $response->assertOK();
 
         // Check if contract was created
         $this->assertCount(1, NeptuneContract::all());
+
+
     }
 
     /** @test */
@@ -64,7 +69,6 @@ class NeptuneContractTest extends TestCase
 
         // Try to update the contract through route
         $this->patch($contract->path(), [
-            'number' => 1,
             'name' => 'new name'
         ]);
 
@@ -138,7 +142,7 @@ class NeptuneContractTest extends TestCase
     protected function createContract($number = 1, $name = 'Anställd')
     {
         return $this->post('/neptune/contracts', [
-            'number' => $number,
+            'code' => $number,
             'name' => $name
         ]);
     }

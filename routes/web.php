@@ -31,6 +31,6 @@ Route::post('neptune/roles', 'NeptuneRolesController@store');
 Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update');
 Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy');
 
-// Route::resource('accounts', 'AccountsController');
+Route::resource('accounts', 'AccountsController');
 
 
