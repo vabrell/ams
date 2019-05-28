@@ -5,7 +5,7 @@ namespace App\Rules;
 use Adldap\Models\User as LdapUser;
 use Adldap\Laravel\Validation\Rules\Rule;
 
-class IsSoltakServicedesk extends Rule
+class IsServicedesk extends Rule
 {
     /**
      * Determines if the user is allowed to authenticate.
@@ -16,6 +16,6 @@ class IsSoltakServicedesk extends Rule
      */
     public function isValid()
     {
-        return $this->user->inGroup(env('SOLTAK_SERVICEDESK_ACCESS_GROUP'));
+        return $this->user->inGroup(env('SERVICEDESK_ACCESS_GROUP'));
     }
 }

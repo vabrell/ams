@@ -73,8 +73,8 @@ return [
 
         // Adldap\Laravel\Validation\Rules\OnlyImported::class,
 
-        App\Rules\IsSoltakInfra::class,
-        App\Rules\IsSoltakServicedesk::class,
+        App\Rules\IsAdmin::class,
+        App\Rules\IsServicedesk::class,
 
     ],
 

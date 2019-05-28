@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->ldap->inGroup(env('SOLTAK_INFRA_ACCESS_GROUP'));
+        return $this->ldap->inGroup(env('ADMIN_ACCESS_GROUP'));
     }
 }
