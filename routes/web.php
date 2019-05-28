@@ -19,4 +19,8 @@ Auth::routes([
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::post('/neptune/contracts', 'ContractsController@store');
+
 Route::resource('accounts', 'AccountsController');
+
+
