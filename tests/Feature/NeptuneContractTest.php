@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Contract;
 use Tests\TestCase;
+use App\NeptuneRole;
+use App\NeptuneContract;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NeptuneContractTest extends TestCase
 {
@@ -25,7 +27,7 @@ class NeptuneContractTest extends TestCase
         $response->assertOK();
 
         // Check if contract was created
-        $this->assertCount(1, Contract::all());
+        $this->assertCount(1, NeptuneContract::all());
     }
 
     /** @test */
@@ -58,7 +60,7 @@ class NeptuneContractTest extends TestCase
         $this->createContract();
 
         // Get the contract
-        $contract = Contract::first();
+        $contract = NeptuneContract::first();
 
         // Try to update the contract through route
         $this->patch($contract->path(), [
@@ -80,16 +82,16 @@ class NeptuneContractTest extends TestCase
         $this->createContract();
 
         // Check if contract was created
-        $this->assertCount(1, Contract::all());
+        $this->assertCount(1, NeptuneContract::all());
 
         // Get the contract
-        $contract = Contract::first();
+        $contract = NeptuneContract::first();
 
         // Try to delete the contract through route
         $this->delete($contract->path());
 
         // Check of the contract was deleted
-        $this->assertCount(0, Contract::all());
+        $this->assertCount(0, NeptuneContract::all());
     }
 
     /** @test */
@@ -102,7 +104,7 @@ class NeptuneContractTest extends TestCase
         $this->createContract();
 
         // Get the contract
-        $contract = Contract::first();
+        $contract = NeptuneContract::first();
 
         // Add contract to a neptune role
         $this->patch($contract->path(), [
@@ -112,6 +114,23 @@ class NeptuneContractTest extends TestCase
         // Check if the contract was added to the role
         $this->assertEquals(1, $contract->fresh()->role_id);
     }
+
+    /** @test */
+    public function a_contract_belongs_to_role_relationship()
+    {
+        // Create two contracts
+        factory(NeptuneRole::class, 2)->create();
+
+        // Check of contracts was created
+        $this->assertCount(2, NeptuneRole::all());
+
+        // Get the role class
+        $contract = new NeptuneContract;
+
+        // Check if the role has one-to-many relationship to contracts
+        $this->assertInstanceOf(BelongsTo::class, $contract->role());
+    }
+
 
 
 
