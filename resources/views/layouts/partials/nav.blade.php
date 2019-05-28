@@ -2,9 +2,12 @@
     @auth
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
-            </li>
+
+            @if (auth()->user()->isServicedesk())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
+                </li>
+            @endif
 
             @if (auth()->user()->isHR())
                 <li class="nav-item">

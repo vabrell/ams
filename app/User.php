@@ -56,4 +56,12 @@ class User extends Authenticatable
 
         return $this->ldap->inGroup(env('HR_ACCESS_GROUP'));
     }
+
+    public function isServicedesk()
+    {
+        if($this->isAdmin())
+            return true;
+
+        return $this->ldap->inGroup(env('SERVICEDESK_ACCESS_GROUP'));
+    }
 }
