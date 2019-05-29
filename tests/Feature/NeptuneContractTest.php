@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use App\NeptuneRole;
 use App\NeptuneContract;
@@ -20,14 +21,14 @@ class NeptuneContractTest extends TestCase
         // Disable the default Laravel exception handling
         $this->withoutExceptionHandling();
 
-        // Try to create a new contract trhough route
+        // Act as a user
+        $this->actAsUser();
+
+        // Try to create a new contract trhough route acting as the user
         $response = $this->createContract();
 
         // Check if user is redirected to neptune
-        $response->assertRedirect('/neptune');
-
-        // Check if respone return OK
-        // $response->assertOK();
+        $response->assertRedirect(route('neptune.contracts.show', NeptuneContract::first()->id));
 
         // Check if contract was created
         $this->assertCount(1, NeptuneContract::all());
@@ -36,9 +37,12 @@ class NeptuneContractTest extends TestCase
     }
 
     /** @test */
-    public function code_is_required()
+    public function contract_code_is_required()
     {
-        // Create contract
+        // Act as a user
+        $this->actAsUser();
+
+        // Create contract as the user
         $response = $this->createContract('');
 
         // Check if session has errors for number
@@ -46,9 +50,12 @@ class NeptuneContractTest extends TestCase
     }
 
     /** @test */
-    public function name_is_required()
+    public function contract_name_is_required()
     {
-        // Create contract
+        // Act as a user
+        $this->actAsUser();
+
+        // Create contract as the user
         $response = $this->createContract(1, '');
 
         // Check if session has errors for number
@@ -61,16 +68,22 @@ class NeptuneContractTest extends TestCase
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
 
-        // Create a contract
+        // Act as a user
+        $this->actAsUser();
+
+        // Create a contract as the user
         $this->createContract();
 
         // Get the contract
         $contract = NeptuneContract::first();
 
         // Try to update the contract through route
-        $this->patch($contract->path(), [
+        $response = $this->patch($contract->path(), [
             'name' => 'new name'
         ]);
+
+        // Check if the user is redirected to the contract
+        $response->assertRedirect(route('neptune.contracts.show', $contract->id));
 
         // Check if the update was successful
         $this->assertEquals('new name', $contract->fresh()->name);
@@ -82,7 +95,10 @@ class NeptuneContractTest extends TestCase
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
 
-        // Create a contract
+        // Act as a suer
+        $this->actAsUser();
+
+        // Create a contract as the user
         $this->createContract();
 
         // Check if contract was created
@@ -92,7 +108,10 @@ class NeptuneContractTest extends TestCase
         $contract = NeptuneContract::first();
 
         // Try to delete the contract through route
-        $this->delete($contract->path());
+        $response= $this->delete($contract->path());
+
+        // Check if the user is redirected to neptune index
+        $response->assertRedirect(route('neptune.index'));
 
         // Check of the contract was deleted
         $this->assertCount(0, NeptuneContract::all());
@@ -103,6 +122,9 @@ class NeptuneContractTest extends TestCase
     {
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
+
+        // Act as a user
+        $this->actAsUser();
 
         // Create a contract
         $this->createContract();
@@ -137,12 +159,21 @@ class NeptuneContractTest extends TestCase
 
 
 
+    /* # Helpers # */
 
+    protected function actAsUser()
+    {
+        // Create a user
+        factory(User::class, 1)->create();
 
-    protected function createContract($number = 1, $name = 'Anställd')
+        // Act as the user
+        return $this->actingAs(User::first());
+    }
+
+    protected function createContract($code = 1, $name = 'Anställd')
     {
         return $this->post('/neptune/contracts', [
-            'code' => $number,
+            'code' => $code,
             'name' => $name
         ]);
     }

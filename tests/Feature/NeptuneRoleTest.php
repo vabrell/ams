@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use App\NeptuneRole;
 use App\NeptuneContract;
@@ -21,11 +22,14 @@ class NeptuneRoleTest extends TestCase
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
 
+        // Act as a user
+        $this->actAsUser();
+
         // Try create a role through route
         $response = $this->createRole();
 
-        // Check if response is OK
-        $response->assertOK();
+        // Check if user is redirected
+        $response->assertRedirect(route('neptune.roles.show', NeptuneRole::first()->id));
 
         // Check if the role was created successfully
         $this->assertCount(1, NeptuneRole::all());
@@ -34,6 +38,9 @@ class NeptuneRoleTest extends TestCase
     /** @test */
     public function a_role_name_is_required()
     {
+        // Act as a user
+        $this->actAsUser();
+
         // Create a role
         $response = $this->createRole($name = '');
 
@@ -46,6 +53,9 @@ class NeptuneRoleTest extends TestCase
     {
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
+
+        // Act as a user
+        $this->actAsUser();
 
         // Create a role
         $this->createRole();
@@ -67,6 +77,9 @@ class NeptuneRoleTest extends TestCase
     {
         // Disable default Laravel exception handling
         $this->withoutExceptionHandling();
+
+        // Act as a user
+        $this->actAsUser();
 
         // Create a role
         $this->createRole();
@@ -103,7 +116,16 @@ class NeptuneRoleTest extends TestCase
 
 
 
+    /* # Helpers # */
 
+    protected function actAsUser()
+    {
+        // Create a user
+        factory(User::class, 1)->create();
+
+        // Act as the user
+        return $this->actingAs(User::first());
+    }
 
     protected function createRole($name = 'Medarbetare')
     {
