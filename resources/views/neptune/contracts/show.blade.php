@@ -34,7 +34,7 @@
 
                     <p><strong>Avtals kod:</strong> {{ $contract->code }}</p>
 
-                    <p><strong>Roll: </strong> {{ $contract->role()->exists() ? $contract->role->name : "N/A" }}</p>
+                    <p><strong>Roll: </strong> {!! $contract->role()->exists() ? '<a href="' . $contract->role->path() . '">' . $contract->role->name . '</a>' : "N/A" !!}</a></p>
                 </div>
             </div>
         </div>
