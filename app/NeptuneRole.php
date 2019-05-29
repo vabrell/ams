@@ -13,7 +13,7 @@ class NeptuneRole extends Model
     /* # Helpers # */
     public function path()
     {
-        return '/neptune/roles/' . $this->id;
+        return route('neptune.roles.show', $this->id);
     }
 
     /* # Relatonships # */

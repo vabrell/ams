@@ -12,7 +12,7 @@ class NeptuneContract extends Model
     /* # Helpers # */
     public function path()
     {
-        return '/neptune/contracts/' . $this->id;
+        return route('neptune.contracts.show', $this->id);
     }
 
     /* # Relationships # */

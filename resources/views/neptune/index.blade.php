@@ -35,6 +35,13 @@
                                 <span class="h4">Roller</span>
                             <a href="{{ route('neptune.roles.create') }}" class="btn btn-sm btn-primary ml-3 mb-2">Ny roll</a>
                             </div>
+                            <div class="mt-3">
+                                    @foreach ($roles as $role)
+                                        <p>
+                                        <a href="{{ $role->path() }}" class="text-decoration-none" >{{ $role->name }}</a>
+                                        </p>
+                                    @endforeach
+                                </div>
                         </div>
 
                     </div>
