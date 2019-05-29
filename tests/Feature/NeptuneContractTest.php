@@ -36,13 +36,13 @@ class NeptuneContractTest extends TestCase
     }
 
     /** @test */
-    public function number_is_required()
+    public function code_is_required()
     {
         // Create contract
         $response = $this->createContract('');
 
         // Check if session has errors for number
-        $response->assertSessionHasErrors('number');
+        $response->assertSessionHasErrors('code');
     }
 
     /** @test */
