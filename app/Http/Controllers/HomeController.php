@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\NeptuneContract;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $contractsNoRole = NeptuneContract::where('role_id', 0)->orderBy('code')->get();
+
+        return view('home', compact('contractsNoRole'));
     }
 }

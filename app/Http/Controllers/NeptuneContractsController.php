@@ -80,7 +80,7 @@ class NeptuneContractsController extends Controller
         return request()->validate([
             'code' => 'required|unique:neptune_contracts|sometimes',
             'name' => 'required|sometimes',
-            'role_id' => 'required|sometimes'
+            'role_id' => 'required|sometimes|exists:neptune_roles,id'
         ]);
     }
 }
