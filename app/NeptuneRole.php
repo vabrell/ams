@@ -19,6 +19,6 @@ class NeptuneRole extends Model
     /* # Relatonships # */
     public function contracts()
     {
-        return $this->hasMany(NeptuneContract::class);
+        return $this->hasMany(NeptuneContract::class, 'role_id');
     }
 }

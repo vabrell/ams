@@ -32,6 +32,10 @@
                         </div>
                     @endif
 
+                    <h3>Avtal</h3>
+                    @foreach ($role->contracts as $contract)
+                        <p><a href="{{ $contract->path() }}" >{{ $contract->code }} - {{ $contract->name }}</a></p>
+                    @endforeach
                 </div>
             </div>
         </div>
