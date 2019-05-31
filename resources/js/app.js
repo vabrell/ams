@@ -30,3 +30,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+$("#btnAdd").click(function(){
+    var selectedOpt = $("#noRole option:selected");
+
+    if(selectedOpt.length === 0) return;
+
+    $("#contract").append($(selectedOpt).clone());
+    $(selectedOpt).remove();
+});
+
+$("#btnRemove").click(function(){
+    var selectedOpt = $("#contract option:selected");
+
+    if(selectedOpt.length === 0) return;
+
+    $("#noRole").append($(selectedOpt).clone());
+    $(selectedOpt).remove();
+});
+
+$("#roleSave").click(function(e){
+    $("#contract option").prop('selected', true);
+    $("#noRole option").prop('selected', true);
+});

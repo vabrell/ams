@@ -15,7 +15,7 @@ class CreateNeptuneContractsTable extends Migration
     {
         Schema::create('neptune_contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('role_id')->nullable();
+            $table->unsignedBigInteger('role_id')->default(0);
             $table->string('code');
             $table->string('name');
             $table->timestamps();

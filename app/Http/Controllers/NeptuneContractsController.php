@@ -52,6 +52,20 @@ class NeptuneContractsController extends Controller
         return redirect($contract->path())->with('status', 'Uppdateringen av avtalet lyckades!');
     }
 
+    public function addRelationship(NeptuneContract $contract, NeptuneRole $role)
+    {
+        $contract->update([
+            'role_id' => $role->id
+        ]);
+    }
+
+    public function removeRelationship(NeptuneContract $contract)
+    {
+        $contract->update([
+            'role_id' => 0
+        ]);
+    }
+
     public function destroy(NeptuneContract $contract)
     {
         // Remove the contract from the database
