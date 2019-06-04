@@ -11,7 +11,7 @@
 
             @if (auth()->user()->isHR())
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('neptune.index') }}">{{ __('Neptune') }}</a>
+                    <a class="nav-link" href="{{ route('neptune.index') }}">{{ __('Neptune') }}</a>
                 </li>
             @endif
 
@@ -20,7 +20,7 @@
                     <a class="nav-link" href="#">{{ __('Inställningar') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ __('Loggar') }}</a>
+                    <a class="nav-link" href="{{ route('logs.index') }}">{{ __('Loggar') }}</a>
                 </li>
             @endif
         </ul>

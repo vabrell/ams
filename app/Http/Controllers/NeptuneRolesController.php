@@ -41,10 +41,11 @@ class NeptuneRolesController extends Controller
         $role = NeptuneRole::create($this->validateRequest());
 
         // Log message
-        $logMessage = "A new Neptune Role was added: " . request()->name;
+        $logMessage = "En ny Neptune Roll har lats till: <b>" . request()->name . "</b>";
 
         // Add the log
-        SamsLogController::addLog(auth()->user->id, 'Add', $logMessage);
+        $log = new SamsLogController();
+        $log->addLog(auth()->user()->id, 'Tillägg', $logMessage);
 
         // Redirect the user to the new role
         return redirect($role->path())->with('status', 'Tillägg av rollen har genomförts!');
@@ -79,29 +80,34 @@ class NeptuneRolesController extends Controller
 
         if($old_name != request()->name){
             // Log message
-            $logMessage = "Neptune Role was changed from " . $old_name . " to " . request()->name;
+            $logMessage = "Neptune Roll var ändrad från <b>" . $old_name . "</b> till <b>" . request()->name . "</b>";
 
             // Add the log
-            SamsLogController::addLog(auth()->user->id, 'Update', $logMessage);
+            $log = new SamsLogController();
+            $log->addLog(auth()->user()->id, 'Uppdatering', $logMessage);
         }
 
-        // Redirect the user to the updated role
+        // Redirect the user() to the updated role
         return redirect($role->path())->with('status', 'Ändringen av rollen har genomförts!');
     }
 
     public function destroy(NeptuneRole $role)
     {
+        $old_name = $role->name;
+
         // Remove relationships
-        NeptuneContractsController::removeRelationshipOnRoleDelete($role->id);
+        $contract = new NeptuneContractsController();
+        $contract->removeRelationshipOnRoleDelete($role->id);
 
         // Delete the role from the database
         $role->delete();
 
         // Log message
-        $logMessage = "Neptune Role " . $old_name. " was deleted";
+        $logMessage = "Neptune Roll <b>" . $old_name. "</b> har tagits bort";
 
         // Add the log
-        SamsLogController::addLog(auth()->user->id, 'Delete', $logMessage);
+        $log = new SamsLogController();
+        $log->addLog(auth()->user()->id, 'Borttag', $logMessage);
 
         // Redirect the user to the Neptune index
         return redirect()->route('neptune.index')->with('status', 'Borttaget av rollen har genomförts!');

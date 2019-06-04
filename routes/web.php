@@ -35,4 +35,4 @@ Route::post('neptune/roles', 'NeptuneRolesController@store')->name('neptune.role
 Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update')->name('neptune.roles.update');
 Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy')->name('neptune.roles.destroy');
 
-
+Route::get('/logs', 'SamsLogController@index')->name('logs.index');
