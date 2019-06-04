@@ -5,7 +5,7 @@
 
             @if (auth()->user()->isServicedesk())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
+                    <a class="nav-link" href="#">{{ __('Hantera konton') }}</a>
                 </li>
             @endif
 
@@ -18,6 +18,9 @@
             @if (auth()->user()->isAdmin())
                 <li class="nav-item">
                     <a class="nav-link" href="#">{{ __('Inställningar') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ __('Loggar') }}</a>
                 </li>
             @endif
         </ul>
@@ -40,7 +43,7 @@
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('Logga ut') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -17,9 +17,11 @@
                     @if(auth()->user()->isHR())
                         <h3 class="d-flex justify-items-baseline">
                             Avtal utan roll
-                            <span class="badge {{ $contractsNoRole->count() > 0 ? 'badge-danger' : 'badge-success' }} ml-2 rounded-circle pt-2">
+                            <small>
+                            <span class="badge {{ $contractsNoRole->count() > 0 ? 'badge-danger' : 'badge-success' }} ml-2">
                                 {{ $contractsNoRole->count() }}
-                            </span>
+                             </span>
+                            </small>
                         </h3>
                         @if ($contractsNoRole->count() > 0)
                             @foreach ($contractsNoRole as $contract)
