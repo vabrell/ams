@@ -34,6 +34,8 @@ const app = new Vue({
 $("#btnAdd").click(function(){
     var selectedOpt = $("#noRole option:selected");
 
+    selectedOpt.addClass('moved');
+
     if(selectedOpt.length === 0) return;
 
     $("#contract").append($(selectedOpt).clone());
@@ -43,6 +45,8 @@ $("#btnAdd").click(function(){
 $("#btnRemove").click(function(){
     var selectedOpt = $("#contract option:selected");
 
+    selectedOpt.addClass('moved');
+
     if(selectedOpt.length === 0) return;
 
     $("#noRole").append($(selectedOpt).clone());
@@ -50,6 +54,6 @@ $("#btnRemove").click(function(){
 });
 
 $("#roleSave").click(function(e){
-    $("#contract option").prop('selected', true);
-    $("#noRole option").prop('selected', true);
+    $("#contract option.moved").prop('selected', true);
+    $("#noRole option.moved").prop('selected', true);
 });
