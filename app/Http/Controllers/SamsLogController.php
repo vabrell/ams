@@ -9,7 +9,7 @@ class SamsLogController extends Controller
 {
     public function index()
     {
-        $logs = SamsLog::orderBy('id', 'desc')->get();
+        $logs = SamsLog::orderBy('id', 'desc')->paginate('30');
 
         return view('logs.index', compact('logs'));
     }

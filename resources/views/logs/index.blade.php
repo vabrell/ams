@@ -30,6 +30,8 @@
         </tbody>
     </table>
 
+    {{ $logs->links() }}
+
     @endif
 
 </div>
