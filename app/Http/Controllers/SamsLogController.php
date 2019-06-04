@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SamsLogController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     public function index()
     {
         $logs = SamsLog::orderBy('id', 'desc')->paginate('30');
