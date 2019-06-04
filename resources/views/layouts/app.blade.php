@@ -39,5 +39,10 @@
             @yield('content')
         </main>
     </div>
+
+    <blockquote class="blockquote text-center">
+        <p class="mb-0">Soltak Account Management System</p>
+        <footer class="blockquote-footer">Utvecklat av Victor Abrell</footer>
+    </blockquote>
 </body>
 </html>

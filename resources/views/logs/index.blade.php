@@ -2,16 +2,17 @@
 
 @section('content')
 <div class="container">
+<div class="card pr-3 pl-3 pt-3">
 
     @if(auth()->user()->isAdmin())
 
-    <table class="table table-striped ">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col">Utförare</th>
                 <th scope="col">Funktion</th>
                 <th scope="col">Meddelande</th>
-                <th scope="col">Utförd</th>
+                <th scope="col">Utfört</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,6 @@
     {{ $logs->links() }}
 
     @endif
-
+</div>
 </div>
 @endsection
