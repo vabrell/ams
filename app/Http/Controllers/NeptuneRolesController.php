@@ -40,12 +40,20 @@ class NeptuneRolesController extends Controller
         // Validate the role request and store in the database
         $role = NeptuneRole::create($this->validateRequest());
 
+        // Log message
+        $logMessage = "A new Neptune Role was added: " . request()->name;
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Add', $logMessage);
+
         // Redirect the user to the new role
         return redirect($role->path())->with('status', 'Tillägg av rollen har genomförts!');
     }
 
     public function update(NeptuneRole $role)
     {
+        $old_name = $role->name;
+
         // Validate the role request then update it in the database
         $role->update($this->validateRequest());
 
@@ -69,14 +77,31 @@ class NeptuneRolesController extends Controller
             }
         }
 
+        if($old_name != request()->name){
+            // Log message
+            $logMessage = "Neptune Role was changed from " . $old_name . " to " . request()->name;
+
+            // Add the log
+            SamsLogController::addLog(auth()->user->id, 'Update', $logMessage);
+        }
+
         // Redirect the user to the updated role
         return redirect($role->path())->with('status', 'Ändringen av rollen har genomförts!');
     }
 
     public function destroy(NeptuneRole $role)
     {
+        // Remove relationships
+        NeptuneContractsController::removeRelationshipOnRoleDelete($role->id);
+
         // Delete the role from the database
         $role->delete();
+
+        // Log message
+        $logMessage = "Neptune Role " . $old_name. " was deleted";
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Delete', $logMessage);
 
         // Redirect the user to the Neptune index
         return redirect()->route('neptune.index')->with('status', 'Borttaget av rollen har genomförts!');

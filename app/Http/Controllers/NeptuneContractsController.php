@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\NeptuneRole;
 use App\NeptuneContract;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SamsLogController;
 
 class NeptuneContractsController extends Controller
 {
@@ -39,14 +40,39 @@ class NeptuneContractsController extends Controller
         // Validate the contract request and then store it in the database
         $contract = NeptuneContract::create($this->validateRequest());
 
+        // Log message
+        $logMessage = "A new Neptune Contract was added: " . request()->code . " - " . request()->name;
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Add', $logMessage);
+
         // Redirect back to the created contract
         return redirect($contract->path())->with('status', 'Tillägg av avtal lyckades!');
     }
 
     public function update(NeptuneContract $contract)
     {
+        $old_name = $contract->name;
+        $old_role = $contract->role_id;
+
         // Validate the contract request and then update it in the database
         $contract->update($this->validateRequest());
+
+        if($old_name != request()->name){
+            // Log message
+            $logMessage = "Neptune Contract name was changed from " . $old_name . " to " . request()->name;
+
+            // Add the log
+            SamsLogController::addLog(auth()->user->id, 'Update', $logMessage);
+        }
+
+        if($old_role != request()->role){
+            // Log message
+            $logMessage = "Neptune Contract " . $contract->name . " was connected to role " . $contract->fresh()->role()->name;
+
+            // Add the log
+            SamsLogController::addLog(auth()->user->id, 'Update', $logMessage);
+        }
 
         // Redirect back to the updated contract
         return redirect($contract->path())->with('status', 'Uppdateringen av avtalet lyckades!');
@@ -57,6 +83,12 @@ class NeptuneContractsController extends Controller
         $contract->update([
             'role_id' => $role->id
         ]);
+
+        // Log message
+        $logMessage = "Neptune Contract " . $contract->name . " was connected to role " . $contract->fresh()->role()->name;
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Update', $logMessage);
     }
 
     public function removeRelationship(NeptuneContract $contract)
@@ -64,12 +96,31 @@ class NeptuneContractsController extends Controller
         $contract->update([
             'role_id' => 0
         ]);
+
+        // Log message
+        $logMessage = "Neptune Contract " . $contract->name . " was disconnected to role " . $contract->fresh()->role()->name;
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Delete', $logMessage);
+    }
+
+    public function removeRelationshipOnRoleDelete($role_id)
+    {
+        NeptuneContract::where('role_id', $role_id)->update(['role_id' => 0]);
     }
 
     public function destroy(NeptuneContract $contract)
     {
+        $old_name = $contract->name;
+
         // Remove the contract from the database
         $contract->delete();
+
+        // Log message
+        $logMessage = "Neptune Contract " . $old_name. " was deleted";
+
+        // Add the log
+        SamsLogController::addLog(auth()->user->id, 'Delete', $logMessage);
 
         // Redirect back to neptune index
         return redirect()->route('neptune.index')->with('status', 'Borttagningen av avtalet lyckades!');

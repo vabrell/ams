@@ -64,4 +64,10 @@ class User extends Authenticatable
 
         return $this->ldap->inGroup(env('SERVICEDESK_ACCESS_GROUP'));
     }
+
+    /* # Relationships # */
+    public function logs()
+    {
+        return $this->hasMany(SamsLog::class);
+    }
 }
