@@ -40,7 +40,9 @@
                                 <div class="col-md-6">
                                     <select id="role_id" class="form-control @error('role_id') is-invalid @enderror" name="role_id">
                                         <option disabled selected>Välj roll</option>
-                                        <option value="0"></option>
+                                        <option disabled>----</option>
+                                        <option value="0">N/A</option>
+                                        <option disabled>----</option>
                                         @foreach ($roles as $role)
                                         {{ $selected = $contract->role()->exists()
                                             ? $contract->role->id == $role->id ? 'selected' : ''
