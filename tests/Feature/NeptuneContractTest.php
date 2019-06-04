@@ -121,7 +121,7 @@ class NeptuneContractTest extends TestCase
     public function a_contract_can_be_added_to_a_neptune_role()
     {
         // Disable default Laravel exception handling
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         // Act as a user
         $this->actAsUser();
@@ -129,12 +129,18 @@ class NeptuneContractTest extends TestCase
         // Create a contract
         $this->createContract();
 
+        // Create a role
+        factory(NeptuneRole::class, 1)->create();
+
         // Get the contract
         $contract = NeptuneContract::first();
 
+        // Get the role
+        $role = NeptuneRole::first();
+
         // Add contract to a neptune role
-        $this->patch($contract->path(), [
-            'role_id' => 1
+        $this->patch(route('neptune.contracts.update', $contract->id), [
+            'role_id' => $role->id
         ]);
 
         // Check if the contract was added to the role
