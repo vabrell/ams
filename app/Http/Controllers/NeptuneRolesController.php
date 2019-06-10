@@ -84,7 +84,7 @@ class NeptuneRolesController extends Controller
 
             // Add the log
             $log = new SamsLogController();
-            $log->addLog(auth()->user()->id, 'Uppdatering', $logMessage);
+            $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
         }
 
         // Redirect the user() to the updated role

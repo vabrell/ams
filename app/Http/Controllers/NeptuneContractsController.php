@@ -60,7 +60,7 @@ class NeptuneContractsController extends Controller
         request()->role_id == 0 ? $exception = true : $exception = false;
         $contract->update($this->validateRequest($exception));
 
-        if($exception == true)
+        if($exception == true && $old_role > 0)
         {
             // Remove relationthip
             $this->removeRelationship($contract);
@@ -73,20 +73,20 @@ class NeptuneContractsController extends Controller
 
             // Add the log
             $log = new SamsLogController();
-            $log->addLog(auth()->user()->id, 'Uppdatering', $logMessage);
+            $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
         }
 
         if($old_role != request()->role_id && $exception == false){
             // Log message
-            $logMessage = "Neptune Avtal <b>" . $contract->name . "</b> kopplades till roll <b>" . $contract->fresh()->role->name . "</b>";
+            $logMessage = "Neptune Avtal <b>" . $contract->name . "</b> kopplades till roll <b>" . $contract->fresh()->role()->name . "</b>";
 
             // Add the log
             $log = new SamsLogController();
-            $log->addLog(auth()->user()->id, 'Uppdatering', $logMessage);
+            $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
         }
 
         // Redirect back to the updated contract
-        return redirect($contract->path())->with('status', 'Uppdateringen av avtalet lyckades!');
+        return redirect($contract->path())->with('status', 'Ändringen av avtalet lyckades!');
     }
 
     public function addRelationship(NeptuneContract $contract, NeptuneRole $role)
@@ -100,7 +100,7 @@ class NeptuneContractsController extends Controller
 
         // Add the log
         $log = new SamsLogController();
-        $log->addLog(auth()->user()->id, 'Uppdatering', $logMessage);
+        $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
     }
 
     public function removeRelationship(NeptuneContract $contract)
@@ -142,7 +142,7 @@ class NeptuneContractsController extends Controller
         return redirect()->route('neptune.index')->with('status', 'Borttagningen av avtalet lyckades!');
     }
 
-    protected function validateRequest($exception)
+    protected function validateRequest($exception = false)
     {
         if($exception == true)
             return request()->validate([
