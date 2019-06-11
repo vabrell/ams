@@ -148,15 +148,15 @@
                         <div id="accordion" class="accordion">
 
                             <div class="card">
-                                <div class="card-header">
-                                    <button class="btn btn-link" type="button"
-                                                                 data-toggle="collapse"
-                                                                 data-target="#groups"
-
-                                                                 aria-controls="groups">
+                                <button class="btn p-0"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#groups"
+                                        aria-controls="groups">
+                                    <div class="card-header">
                                         Grupper
-                                    </button>
-                                </div>
+                                    </div>
+                                </button>
                                 <div id="groups" class="collapse" aria-labelledby="groups" data-parent="#accordion">
                                     <div class="card-body">
                                         @foreach ($groups as $group)
@@ -168,15 +168,15 @@
 
                             @if (!empty($directreports))
                             <div class="card">
-                                <div class="card-header">
-                                    <button class="btn btn-link" type="button"
-                                                                 data-toggle="collapse"
-                                                                 data-target="#employees"
-
-                                                                 aria-controls="employees">
+                                <button class="btn p-0"
+                                            type="button"
+                                            data-toggle="collapse"
+                                            data-target="#employees"
+                                            aria-controls="employees">
+                                    <div class="card-header">
                                         Anställda
-                                    </button>
-                                </div>
+                                    </div>
+                                </button>
                                 <div id="employees" class="collapse" aria-labelledby="employees" data-parent="#accordion">
                                     <div class="card-body">
                                         @foreach ($directreports as $directreport)
