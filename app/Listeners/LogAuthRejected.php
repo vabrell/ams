@@ -25,6 +25,6 @@ class LogAuthRejected
      */
     public function handle(AuthenticationRejected $event)
     {
-        Session::flash('error.ldap', "You don't have the permission to login!");
+        Session::flash('error.ldap', "Du har inte rättighet att logga in!");
     }
 }

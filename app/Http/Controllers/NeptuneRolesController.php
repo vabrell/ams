@@ -118,6 +118,8 @@ class NeptuneRolesController extends Controller
     {
         return request()->validate([
             'name' => 'required'
+        ], [
+            'name.required' => 'Ett namn för rollen måste finnas med.',
         ]);
     }
 }

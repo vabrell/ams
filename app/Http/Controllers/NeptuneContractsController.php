@@ -148,12 +148,22 @@ class NeptuneContractsController extends Controller
             return request()->validate([
                 'code' => 'required|unique:neptune_contracts|sometimes',
                 'name' => 'required|sometimes',
+            ], [
+                'code.required' => 'Ett avtal måste finnas med.',
+                'code.unique' => 'Det finns redan ett avtal med detta nummer upplagt',
+                'name.required' => 'Ett namn för avtalen måste finnas med.',
             ]);
 
         return request()->validate([
             'code' => 'required|unique:neptune_contracts|sometimes',
             'name' => 'required|sometimes',
             'role_id' => 'required|sometimes|exists:neptune_roles,id'
+        ], [
+            'code.required' => 'Ett avtal måste finnas med.',
+            'code.unique' => 'Det finns redan ett avtal med detta nummer upplagt',
+            'name.required' => 'Ett namn för avtalet måste finnas med.',
+            'role_id.required' => 'En roll måste väljas.',
+            'role_id.exists' => 'Rollens som valts existerar inte.'
         ]);
     }
 }
