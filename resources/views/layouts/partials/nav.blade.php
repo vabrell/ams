@@ -5,7 +5,7 @@
 
             @if (auth()->user()->isServicedesk())
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ __('Hantera konton') }}</a>
+                    <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
                 </li>
             @endif
 
