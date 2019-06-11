@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', '') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -44,5 +41,9 @@
         <p class="mb-0">Soltak Account Management System</p>
         <footer class="blockquote-footer">Utvecklat av Victor Abrell</footer>
     </blockquote>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

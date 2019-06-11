@@ -36,10 +36,13 @@ Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update')->name('nep
 Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy')->name('neptune.roles.destroy');
 
 Route::get('/accounts', 'AccountsController@index')->name('accounts.index');
+
 Route::get('/accounts/search', 'AccountsController@adIndex')->name('accounts.ad.index');
 Route::post('/accounts/search', 'AccountsController@adSearch')->name('accounts.ad.search');
 Route::get('/accounts/search/{account}', 'AccountsController@adShow')->name('accounts.ad.show');
 Route::post('/accounts/{account}/reset', 'AccountsController@resetPassword')->name('accounts.ad.resetpwd');
+Route::post('/accounts/{account}/unlock', 'AccountsController@unlockAccount')->name('accounts.ad.unlock');
+
 Route::post('/accounts/consultants', 'AccountsController@store')->name('accounts.consultants.store');
 Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update');
 Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete');
