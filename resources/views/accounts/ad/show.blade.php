@@ -80,9 +80,9 @@
                             </form>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="row">
 
-                            <div class="col-1">
+                            <div class="col-1 offset-lg-10">
                                 <button type="button" id="showPwd" class="btn btn-primary" data-toggle="modal" data-target="#pwd">
                                     <i class="fas fa-key"></i>
                                 </button>
@@ -99,53 +99,97 @@
 
                         </div>
 
-                        <div class="card-header rounded border-secondary mt-3">Användaruppgifter</div>
-                        <div class="card-body">
+                        <div class="row mt-3">
+                            <div class="col-lg-4 col-md-6">
 
-                            <p><b>Namn:</b> {{ $user->displayname['0'] }}</p>
-                            <p><b>Telefon:</b> {{ $user->telephonenumber['0'] }}</p>
-                            <p><b>Mobil:</b> {{ $user->mobile['0'] }}</p>
-                            <p><b>SMS verifikation:</b> {{ $user->extensionattribute7['0'] }}</p>
+                                <div class="card-header rounded border-secondary">Användaruppgifter</div>
+                                <div class="card-body">
 
+                                    <p><b>Namn:</b> {{ $user->displayname['0'] }}</p>
+                                    <p><b>Telefon:</b> {{ $user->telephonenumber['0'] }}</p>
+                                    <p><b>Mobil:</b> {{ $user->mobile['0'] }}</p>
+                                    <p><b>SMS verifikation:</b> {{ $user->extensionattribute7['0'] }}</p>
+                                    <p><b>E-post:</b> {{ $user->mail['0'] }}</p>
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+
+                                <div class="card-header rounded border-secondary">Jobbuppgifter</div>
+                                <div class="card-body">
+
+                                    <p><b>Befattning:</b> {{ $user->title['0'] }}</p>
+                                    <p><b>Företag:</b> {{ $user->company['0'] }}</p>
+                                    <p><b>Chef:</b> <a href="{{ $manager->samaccountname[0] }}">{{ $manager->displayname['0'] }}</a></p>
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+
+                                <div class="card-header rounded border-secondary">Kontouppgifter</div>
+                                <div class="card-body">
+
+                                    <p><b>Status:</b>
+                                        @if($user->getLockoutTime() > 1)
+                                            Låst
+                                        @else
+                                            {{ $user->isActive() ? 'Aktiv' : 'Inaktiv' }}</p>
+                                        @endif
+                                    <p><b>Lösenord ändrat:</b> {{ $user->getPasswordLastSetDate() }}</p>
+                                    <p><b>Lösenord går ut:</b> {{ $user->getPasswordExpires() == 'Never' ? 'Aldrig' : $user->getPasswordExpires() }}</p>
+
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div class="card-header rounded border-secondary">Jobbuppgifter</div>
-                        <div class="card-body">
+                        <div id="accordion" class="accordion">
 
-                            <p><b>Befattning:</b> {{ $user->title['0'] }}</p>
-                            <p><b>Företag:</b> {{ $user->company['0'] }}</p>
-                            <p><b>Chef:</b> <a href="{{ $manager->samaccountname[0] }}">{{ $manager->displayname['0'] }}</a></p>
+                            <div class="card">
+                                <div class="card-header">
+                                    <button class="btn btn-link" type="button"
+                                                                 data-toggle="collapse"
+                                                                 data-target="#groups"
+
+                                                                 aria-controls="groups">
+                                        Grupper
+                                    </button>
+                                </div>
+                                <div id="groups" class="collapse" aria-labelledby="groups" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @foreach ($groups as $group)
+                                            <p>{{ $group->samaccountname[0] }}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (!empty($directreports))
+                            <div class="card">
+                                <div class="card-header">
+                                    <button class="btn btn-link" type="button"
+                                                                 data-toggle="collapse"
+                                                                 data-target="#employees"
+
+                                                                 aria-controls="employees">
+                                        Anställda
+                                    </button>
+                                </div>
+                                <div id="employees" class="collapse" aria-labelledby="employees" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @foreach ($directreports as $directreport)
+                                            @if (substr($directreport->samaccountname[0], 0, 2) != "a2")
+                                                <p><a href="{{ route('accounts.ad.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
 
                         </div>
-
-                        <div class="card-header rounded border-secondary">Kontouppgifter</div>
-                        <div class="card-body">
-
-                            <p><b>Status:</b>
-                                @if($user->getLockoutTime() > 1)
-                                    Låst
-                                @else
-                                    {{ $user->isActive() ? 'Aktiv' : 'Inaktiv' }}</p>
-                                @endif
-                            <p><b>Lösenord ändrat:</b> {{ $user->getPasswordLastSetDate() }}</p>
-                            <p><b>Lösenord går ut:</b> {{ $user->getPasswordExpires() == 'Never' ? 'Aldrig' : $user->getPasswordExpires() }}</p>
-
-                        </div>
-
-                        @if (!empty($directreports))
-
-                        <div class="card-header rounded border-secondary">Anställda</div>
-                        <div class="card-body">
-
-                            @foreach ($directreports as $directreport)
-                                @if (substr($directreport->samaccountname[0], 0, 2) != "a2")
-                                    <p><a href="{{ route('accounts.ad.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
-                                @endif
-                            @endforeach
-
-                        </div>
-
-                    @endif
 
                     @else
 

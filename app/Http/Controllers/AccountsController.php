@@ -70,8 +70,18 @@ class AccountsController extends Controller
             }
         }
 
+        // Get the users direct reports
+        $groups = [];
+        if($user->memberof != null)
+        {
+            foreach($user->memberof as $group)
+            {
+                array_push($groups, Adldap::search()->groups()->findByDn($group));
+            }
+        }
+
         // Return view with results
-        return view('accounts.ad.show', compact('user', 'manager', 'directreports'));
+        return view('accounts.ad.show', compact('user', 'manager', 'directreports', 'groups'));
 
     }
 
