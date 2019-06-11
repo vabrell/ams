@@ -45,7 +45,7 @@ class NeptuneContractTest extends TestCase
         // Create contract as the user
         $response = $this->createContract('');
 
-        // Check if session has errors for number
+        // Check if session has errors for code
         $response->assertSessionHasErrors('code');
     }
 
@@ -58,7 +58,7 @@ class NeptuneContractTest extends TestCase
         // Create contract as the user
         $response = $this->createContract(1, '');
 
-        // Check if session has errors for number
+        // Check if session has errors for name
         $response->assertSessionHasErrors('name');
     }
 
@@ -176,9 +176,9 @@ class NeptuneContractTest extends TestCase
         return $this->actingAs(User::first());
     }
 
-    protected function createContract($code = 1, $name = 'Anställd')
+    protected function createContract($code = 1, $name = 'Anställd', $role = null)
     {
-        return $this->post('/neptune/contracts', [
+        return $this->post(route('neptune.contracts.store'), [
             'code' => $code,
             'name' => $name
         ]);
