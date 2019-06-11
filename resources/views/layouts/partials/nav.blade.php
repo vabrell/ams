@@ -5,22 +5,22 @@
 
             @if (auth()->user()->isServicedesk())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('accounts.index') }}">{{ __('Hantera konton') }}</a>
+                    <a class="nav-link" href="{{ route('accounts.index') }}"><i class="fas fa-user"></i> {{ __('Konton') }}</a>
                 </li>
             @endif
 
             @if (auth()->user()->isHR())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('neptune.index') }}">{{ __('Neptune') }}</a>
+                    <a class="nav-link" href="{{ route('neptune.index') }}"><i class="fas fa-users-cog"></i> {{ __('Neptune') }}</a>
                 </li>
             @endif
 
             @if (auth()->user()->isAdmin())
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ __('Inställningar') }}</a>
+                    <a class="nav-link" href="#"><i class="fas fa-cogs"></i> {{ __('Inställningar') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logs.index') }}">{{ __('Loggar') }}</a>
+                    <a class="nav-link" href="{{ route('logs.index') }}"><i class="fas fa-clipboard-list"></i> {{ __('Loggar') }}</a>
                 </li>
             @endif
         </ul>

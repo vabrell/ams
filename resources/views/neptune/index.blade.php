@@ -19,7 +19,7 @@
                         <div class="col-lg-6">
                             <div class="d-flex align-items-center">
                                 <span class="h4">Avtal</span>
-                                <a href="{{ route('neptune.contracts.create') }}" class="btn btn-sm btn-primary ml-3 mb-2">Nytt avtal</a>
+                                <a href="{{ route('neptune.contracts.create') }}" class="btn btn-sm btn-primary ml-3 mb-2"><i class="fas fa-plus"></i></a>
                             </div>
                             <div class="mt-3">
                                 @foreach ($contracts as $contract)
@@ -33,7 +33,7 @@
                         <div class="col-lg-6">
                             <div class="d-flex align-items-center">
                                 <span class="h4">Roller</span>
-                            <a href="{{ route('neptune.roles.create') }}" class="btn btn-sm btn-primary ml-3 mb-2">Ny roll</a>
+                            <a href="{{ route('neptune.roles.create') }}" class="btn btn-sm btn-primary ml-3 mb-2"><i class="fas fa-plus"></i></a>
                             </div>
                             <div class="mt-3">
                                     @foreach ($roles as $role)

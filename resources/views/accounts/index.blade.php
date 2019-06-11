@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('accounts.ad.index') }}" class="btn btn-primary">Sök efter användare i AD</a>
+                    <a href="{{ route('accounts.ad.index') }}" class="btn btn-primary"><i class="fas fa-search"></i> Active Directory</a>
                 </div>
             </div>
         </div>
