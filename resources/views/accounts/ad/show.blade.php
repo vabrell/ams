@@ -154,7 +154,7 @@
                                         data-target="#groups"
                                         aria-controls="groups">
                                     <div class="card-header">
-                                        Grupper
+                                        Behörigheter
                                     </div>
                                 </button>
                                 <div id="groups" class="collapse" aria-labelledby="groups" data-parent="#accordion">
@@ -165,6 +165,31 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="card">
+                                    <button class="btn p-0"
+                                            type="button"
+                                            data-toggle="collapse"
+                                            data-target="#applications"
+                                            aria-controls="applications">
+                                        <div class="card-header">
+                                            Applikationer
+                                        </div>
+                                    </button>
+                                    <div id="applications" class="collapse" aria-labelledby="applications" data-parent="#accordion">
+                                        <div class="card-body">
+                                            @foreach ($applications as $application)
+                                                <p>{{   str_replace("CS-SYS-SCCM-APP-", "",
+                                                        str_replace("_", " ",
+                                                        str_replace("User", "",
+                                                        str_replace("Install", "",
+                                                        str_replace("Uninstall", "",
+                                                        $application->samaccountname[0]
+                                                        ))))) }}</p>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
 
                             @if (!empty($directreports))
                             <div class="card">

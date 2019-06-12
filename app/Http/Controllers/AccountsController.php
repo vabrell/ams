@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use Adldap\AdldapException;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Adldap\Laravel\Facades\Adldap;
 use App\Http\Controllers\SamsLogController;
@@ -46,6 +47,7 @@ class AccountsController extends Controller
             ->whereNotEquals('employeetype', 'Elev')
             ->get();
 
+        Arr::sort($ldap);
 
         // Return view with results
         return view('accounts.ad.index', compact('ldap'));
@@ -72,16 +74,24 @@ class AccountsController extends Controller
 
         // Get the users direct reports
         $groups = [];
+        $applications = [];
         if($user->memberof != null)
         {
-            foreach($user->memberof as $group)
+            foreach(Arr::sort($user->memberof) as $group)
             {
-                array_push($groups, Adldap::search()->groups()->findByDn($group));
+                $_group = Adldap::search()->groups()->findByDn($group);
+                if(substr($_group->samaccountname[0], 0, 16) == "CS-SYS-SCCM-APP-")
+                {
+                    array_push($applications, $_group);
+                }
+                else {
+                    array_push($groups, $_group);
+                }
             }
         }
 
         // Return view with results
-        return view('accounts.ad.show', compact('user', 'manager', 'directreports', 'groups'));
+        return view('accounts.ad.show', compact('user', 'manager', 'directreports', 'groups', 'applications'));
 
     }
 
