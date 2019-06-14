@@ -12,6 +12,6 @@ class Account extends Model
     /* # Helpers # */
     public function path()
     {
-        return '/accounts/' . $this->id;
+        return route('accounts.consultants.show', $this->id);
     }
 }

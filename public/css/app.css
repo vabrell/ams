@@ -16406,3 +16406,8 @@ a.text-dark:focus {
   height: 50px;
 }
 
+.required::after {
+  color: #ff0000;
+  content: "*";
+}
+

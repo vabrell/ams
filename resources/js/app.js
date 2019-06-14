@@ -17,7 +17,7 @@ window.Vue = require('vue');
  */
 
 // const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.'){0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
@@ -56,4 +56,69 @@ $("#btnRemove").click(function(){
 $("#roleSave").click(function(e){
     $("#contract option.moved").prop('selected', true);
     $("#noRole option.moved").prop('selected', true);
+});
+
+function appendLeadingZero(n)
+{
+    if(n <= 9)
+    {
+        return "0" + n;
+    }
+    return n;
+}
+
+function getDate(datestamp){
+    var date = new Date(datestamp);
+    var d = appendLeadingZero(date.getDate());
+    var m = appendLeadingZero(date.getMonth() + 1);
+    var y = date.getFullYear();
+
+    return y + "-" + m + "-" + d;
+}
+
+if($("#startDate").val())
+{
+    var date = $("#startDate").val();
+
+    var newDate = new Date(date);
+    var minDate = getDate(newDate.setDate(newDate.getDate() + 1));
+    var maxDate = getDate(newDate.setDate(newDate.getDate() + 367));
+
+    $("#endDate").attr({
+        'disabled': false,
+        'min': minDate,
+        'max': maxDate,
+    });
+}
+
+$("#startDate").change(function(){
+    var date = $("#startDate").val();
+
+    if(date)
+    {
+        var newDate = new Date(date);
+        var minDate = getDate(newDate.setDate(newDate.getDate() + 1));
+        var maxDate = getDate(newDate.setDate(newDate.getDate() + 367));
+
+        $("#endDate").attr({
+            'disabled': false,
+            'min': minDate,
+            'max': maxDate,
+        });
+    }
+    else
+    {
+        $("#endDate").attr({
+            'disabled': true,
+            'min': '',
+            'max': '',
+        }).val('');
+    }
+});
+
+$("#localAccount").val() === '1' ? $("#localAccount").prop('checked', true) : $("#localAccount").val(0);
+$("#isEdu").val() === '1' ? $("#isEdu").prop('checked', true) : $("#isEdu").val(0);
+
+$(":checkbox").change(function(){
+    $(this).is(':checked') ? $(this).val(1) : $(this).val(0);
 });

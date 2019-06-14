@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use Adldap\AdldapException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Adldap\Laravel\Facades\Adldap;
 use App\Http\Controllers\SamsLogController;
@@ -23,20 +24,23 @@ class AccountsController extends Controller
 
     /* # Active Directory management # */
 
-    public function adIndex()
+    public function employeeIndex()
     {
         // Set ldap to null
         $ldap = null;
 
         // Return view for AD account search
-        return view('accounts.ad.index', compact('ldap'));
+        return view('accounts.employee.index', compact('ldap'));
     }
 
-    public function adSearch()
+    public function employeeSearch()
     {
         // Validate the request
         request()->validate([
             'search' => 'required|min:3'
+        ],[
+            'search.required' => 'Sökfältet måste fyllas i',
+            'search.min' => 'Sökfältet måste innehålla minst :min tecken',
         ]);
 
         // Get ldap results
@@ -44,17 +48,17 @@ class AccountsController extends Controller
             ->orWhereStartsWith('samaccountname', request()->search)
             ->orWhereContains('displayname', request()->search)
             ->whereHas('employeetype')
-            ->whereNotEquals('employeetype', 'Elev')
+            ->whereEquals('employeetype', 'Anställd')
             ->get();
 
         Arr::sort($ldap);
 
         // Return view with results
-        return view('accounts.ad.index', compact('ldap'));
+        return view('accounts.employee.index', compact('ldap'));
 
     }
 
-    public function adShow($account)
+    public function employeeShow($account)
     {
         // Get the user
         $user = Adldap::search()->users()->find($account);
@@ -91,7 +95,7 @@ class AccountsController extends Controller
         }
 
         // Return view with results
-        return view('accounts.ad.show', compact('user', 'manager', 'directreports', 'groups', 'applications'));
+        return view('accounts.employee.show', compact('user', 'manager', 'directreports', 'groups', 'applications'));
 
     }
 
@@ -122,7 +126,7 @@ class AccountsController extends Controller
             $log = new SamsLogController();
             $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
 
-            return redirect(route('accounts.ad.show', $account))->with('status', 'Lösenordet har nollstälts');
+            return redirect(route('accounts.employee.show', $account))->with('status', 'Lösenordet har nollstälts');
         }
         catch(\Exception $e)
         {
@@ -148,10 +152,20 @@ class AccountsController extends Controller
         $log->addLog(auth()->user()->id, 'Ändring', $logMessage);
 
         // Return the user to the account
-        return redirect(route('accounts.ad.show', $account))->with('status', 'Kontot har låsts upp!');
+        return redirect(route('accounts.employee.show', $account))->with('status', 'Kontot har låsts upp!');
     }
 
     /* # Consultant management # */
+
+    public function create()
+    {
+        return view('accounts.consultants.create');
+    }
+
+    public function show(Account $account)
+    {
+        return view('accounts.consultants.show', compact('account'));
+    }
 
     public function store()
     {
@@ -209,22 +223,35 @@ class AccountsController extends Controller
     {
         return request()->validate([
             'uuid' => 'required|sometimes|unique:accounts',
-            'firstname' => 'required|sometimes',
-            'lastname' => 'required|sometimes',
+            'firstname' => 'required',
+            'lastname' => 'required',
             'title' => '',
-            'mobile' => 'required|sometimes',
-            'vht' => 'required|sometimes',
-            'ansvar' => 'required|sometimes',
-            'company' => 'required|sometimes',
-            'consultantCompany' => 'required|sometimes',
+            'mobile' => 'required',
+            'vht' => 'required',
+            'ansvar' => 'required',
+            'company' => 'required',
+            'consultantCompany' => 'required',
             'department' => '',
-            'managerUuid' => 'required|sometimes',
-            'employeeType' => 'required|sometimes',
-            'startDate' => 'required|sometimes',
-            'endDate' => 'required|sometimes',
-            'localAccount' => 'required|sometimes',
-            'isEdu' => 'required|sometimes',
-            'createdBy' => 'required|sometimes'
+            'managerUuid' => 'required',
+            'startDate' => 'required|date|after:today',
+            'endDate' => 'required|date|after:startDate',
+            'localAccount' => 'boolean',
+            'isEdu' => 'boolean',
+            'createdBy' => 'required'
+        ],[
+            'firstname.required' => 'Förnamn måste fyllas i',
+            'lastname.required' => 'Efternamn måste fyllas i',
+            'mobile.required' => 'Mobil måste fyllas i',
+            'vht.required' => 'VHT måste fyllas i',
+            'Ansvar.required' => 'Ansvar måste fyllas i',
+            'company.required' => 'Ett bolag måste väljas',
+            'consultantCompany.required' => 'Ett konsultbolag måste fyllas i',
+            'managerUuid.required' => 'En ansvarig/chef måste väljas',
+            'startDate.required' => 'Ett startdatum måste väljas',
+            'startDate.after' => 'Startdatum måste vara idag eller senare',
+            'endDate.required' => 'Ett slutdatum måste väljas',
+            'endDate.after' => 'Slutdatum måste vara senare än startdatum',
+
         ]);
     }
 }

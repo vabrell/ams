@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('accounts.ad.search') }}">
+                    <form method="POST" action="{{ route('accounts.employee.search') }}">
                         @csrf
 
                         <div class="form-group row justify-content-center">
@@ -55,7 +55,7 @@
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('accounts.ad.show', $user->samaccountname['0']) }}">
+                                        <a href="{{ route('accounts.employee.show', $user->samaccountname['0']) }}">
                                             {{ $user->samaccountname['0'] }}
                                         </a>
                                     </td>

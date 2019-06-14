@@ -37,12 +37,14 @@ Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy')->name('n
 
 Route::get('/accounts', 'AccountsController@index')->name('accounts.index');
 
-Route::get('/accounts/search', 'AccountsController@adIndex')->name('accounts.ad.index');
-Route::post('/accounts/search', 'AccountsController@adSearch')->name('accounts.ad.search');
-Route::get('/accounts/search/{account}', 'AccountsController@adShow')->name('accounts.ad.show');
-Route::post('/accounts/{account}/reset', 'AccountsController@resetPassword')->name('accounts.ad.resetpwd');
-Route::post('/accounts/{account}/unlock', 'AccountsController@unlockAccount')->name('accounts.ad.unlock');
+Route::get('/accounts/employee', 'AccountsController@employeeIndex')->name('accounts.employee.index');
+Route::post('/accounts/employee', 'AccountsController@employeeSearch')->name('accounts.employee.search');
+Route::get('/accounts/employee/{account}', 'AccountsController@employeeShow')->name('accounts.employee.show');
+Route::post('/accounts/employee/{account}/reset', 'AccountsController@resetPassword')->name('accounts.employee.resetpwd');
+Route::post('/accounts/employee/{account}/unlock', 'AccountsController@unlockAccount')->name('accounts.employee.unlock');
 
+Route::get('/accounts/consultants/create', 'AccountsController@create')->name('accounts.consultants.create');
+Route::get('/accounts/consultants/{account}', 'AccountsController@show')->name('accounts.consultants.show');
 Route::post('/accounts/consultants', 'AccountsController@store')->name('accounts.consultants.store');
 Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update');
 Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete');

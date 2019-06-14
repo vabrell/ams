@@ -25,7 +25,7 @@
                     @if (!empty($user))
 
                         <div class="modal fade" id="pwd" tabindex="-1" role="dialog" aria-labelledby="pwdLabel" aria-hidden="true">
-                            <form method="POST" action="{{ route('accounts.ad.resetpwd', $user->samaccountname[0]) }}">
+                            <form method="POST" action="{{ route('accounts.employee.resetpwd', $user->samaccountname[0]) }}">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="col-1">
-                                <form method="POST" action="{{ route('accounts.ad.unlock', $user->samaccountname[0]) }}">
+                                <form method="POST" action="{{ route('accounts.employee.unlock', $user->samaccountname[0]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-success" @if($user->getLockoutTime() < 1) disabled @endif>
                                         <i class="fas fa-lock-open"></i>
@@ -205,8 +205,8 @@
                                 <div id="employees" class="collapse" aria-labelledby="employees" data-parent="#accordion">
                                     <div class="card-body">
                                         @foreach ($directreports as $directreport)
-                                            @if (substr($directreport->samaccountname[0], 0, 2) != "a2")
-                                                <p><a href="{{ route('accounts.ad.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
+                                            @if ($directreport->employeetype[0] == "Anställd")
+                                                <p><a href="{{ route('accounts.employee.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
                                             @endif
                                         @endforeach
                                     </div>
