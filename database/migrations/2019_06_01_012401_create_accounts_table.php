@@ -14,23 +14,15 @@ class CreateAccountsTable extends Migration
     public function up()
     {
         Schema::create('accounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->uuid('uuid');
+            $table->uuid('id')->primary();
+            $table->string('accountname')->nullable();
             $table->string('firstname');
             $table->string('lastname');
             $table->string('title')->nullable();
-            $table->integer('mobile');
-            $table->string('vht');
-            $table->string('ansvar');
+            $table->string('mobile');
+            $table->string('email');
             $table->string('company');
-            $table->string('consultantCompany');
-            $table->string('department')->nullable();
-            $table->uuid('managerUuid');
-            $table->date('startDate');
-            $table->date('endDate');
-            $table->boolean('localAccount')->default(false);
-            $table->boolean('isEdu')->default(false);
-            $table->unsignedBigInteger('createdBy');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

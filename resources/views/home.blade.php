@@ -13,6 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @error('badRequest')
+                    <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                    </div>
+                    @enderror
 
                     @if(auth()->user()->isHR())
                         <h3 class="d-flex justify-items-baseline">

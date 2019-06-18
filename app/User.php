@@ -49,6 +49,14 @@ class User extends Authenticatable
         return $this->ldap->inGroup(env('ADMIN_ACCESS_GROUP'));
     }
 
+    public function isSystemAdmin()
+    {
+        if($this->isAdmin())
+            return true;
+
+        return $this->ldap->inGroup(env('SYSTEMADMIN_ACCESS_GROUP'));
+    }
+
     public function isHR()
     {
         if($this->isAdmin())
@@ -69,5 +77,15 @@ class User extends Authenticatable
     public function logs()
     {
         return $this->hasMany(SamsLog::class);
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
+
+    public function taks()
+    {
+        return $this->hasMany(ConsultantTask::class);
     }
 }

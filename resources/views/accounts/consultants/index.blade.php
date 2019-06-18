@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('accounts.employee.search') }}">
+                    <form method="POST" action="{{ route('accounts.consultants.search') }}">
                         @csrf
 
                         <div class="form-group row justify-content-center">
@@ -43,24 +43,22 @@
                             <tr>
                                 <th scope="col">Användarnamn</th>
                                 <th scope="col">Namn</th>
-                                <th scope="col">Befattning</th>
-                                <th scope="col">Företag</th>
+                                <th scope="col">Konsultbolag</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                        @if (!empty($ldap))
-                            @foreach ($ldap as $user)
+                        @if (!empty($account))
+                            @foreach ($account as $user)
 
                                 <tr>
                                     <td>
-                                        <a href="{{ route('accounts.employee.show', $user->samaccountname['0']) }}">
-                                            {{ $user->samaccountname['0'] }}
+                                        <a href="{{ route('accounts.consultants.show', $user->id) }}">
+                                            {{ $user->accountname }}
                                         </a>
                                     </td>
-                                    <td>{{ $user->displayname['0'] }}</td>
-                                    <td>{{ $user->title['0'] }}</td>
-                                    <td>{{ $user->company['0'] }}</td>
+                                    <td>{{ $user->firstname }} {{ $user->lastname }}</td>
+                                    <td>{{ $user->company }}</td>
                                 </tr>
 
                             @endforeach

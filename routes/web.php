@@ -19,34 +19,53 @@ Auth::routes([
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/neptune', 'NeptuneController@index')->name('neptune.index');
+// Neptune services
+Route::get('/neptune', 'NeptuneController@index')->name('neptune.index')->middleware('hr');
 
-Route::get('/neptune/contracts/create', 'NeptuneContractsController@create')->name('neptune.contracts.create');
-Route::get('/neptune/contracts/{contract}', 'NeptuneContractsController@show')->name('neptune.contracts.show');
-Route::get('/neptune/contracts/{contract}/edit', 'NeptuneContractsController@edit')->name('neptune.contracts.edit');
+// Neptune contracts
+Route::get('/neptune/contracts/create', 'NeptuneContractsController@create')->name('neptune.contracts.create')->middleware('hr');
+Route::get('/neptune/contracts/{contract}', 'NeptuneContractsController@show')->name('neptune.contracts.show')->middleware('hr');
+Route::get('/neptune/contracts/{contract}/edit', 'NeptuneContractsController@edit')->name('neptune.contracts.edit')->middleware('hr');
 Route::post('/neptune/contracts', 'NeptuneContractsController@store')->name('neptune.contracts.store');
-Route::patch('/neptune/contracts/{contract}', 'NeptuneContractsController@update')->name('neptune.contracts.update');
-Route::delete('/neptune/contracts/{contract}', 'NeptuneContractsController@destroy')->name('neptune.contracts.destroy');
+Route::patch('/neptune/contracts/{contract}', 'NeptuneContractsController@update')->name('neptune.contracts.update')->middleware('hr');
+Route::delete('/neptune/contracts/{contract}', 'NeptuneContractsController@destroy')->name('neptune.contracts.destroy')->middleware('hr');
 
-Route::get('/neptune/roles/create', 'NeptuneRolesController@create')->name('neptune.roles.create');
-Route::get('/neptune/roles/{role}', 'NeptuneRolesController@show')->name('neptune.roles.show');
-Route::get('/neptune/roles/{role}/edit', 'NeptuneRolesController@edit')->name('neptune.roles.edit');
-Route::post('neptune/roles', 'NeptuneRolesController@store')->name('neptune.roles.store');
-Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update')->name('neptune.roles.update');
-Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy')->name('neptune.roles.destroy');
+// Neptune roles
+Route::get('/neptune/roles/create', 'NeptuneRolesController@create')->name('neptune.roles.create')->middleware('hr');
+Route::get('/neptune/roles/{role}', 'NeptuneRolesController@show')->name('neptune.roles.show')->middleware('hr');
+Route::get('/neptune/roles/{role}/edit', 'NeptuneRolesController@edit')->name('neptune.roles.edit')->middleware('hr');
+Route::post('neptune/roles', 'NeptuneRolesController@store')->name('neptune.roles.store')->middleware('hr');
+Route::patch('neptune/roles/{role}', 'NeptuneRolesController@update')->name('neptune.roles.update')->middleware('hr');
+Route::delete('neptune/roles/{role}', 'NeptuneRolesController@destroy')->name('neptune.roles.destroy')->middleware('hr');
 
+// Account services
 Route::get('/accounts', 'AccountsController@index')->name('accounts.index');
+Route::post('/accounts/{account}/{type}/reset', 'AccountsController@resetPassword')->name('accounts.resetpwd');
+Route::post('/accounts/{account}/{type}/unlock', 'AccountsController@unlockAccount')->name('accounts.unlock');
+Route::post('/accounts/{account}/server', 'AccountsController@serverAdd')->name('accounts.server.add');
 
-Route::get('/accounts/employee', 'AccountsController@employeeIndex')->name('accounts.employee.index');
-Route::post('/accounts/employee', 'AccountsController@employeeSearch')->name('accounts.employee.search');
-Route::get('/accounts/employee/{account}', 'AccountsController@employeeShow')->name('accounts.employee.show');
-Route::post('/accounts/employee/{account}/reset', 'AccountsController@resetPassword')->name('accounts.employee.resetpwd');
-Route::post('/accounts/employee/{account}/unlock', 'AccountsController@unlockAccount')->name('accounts.employee.unlock');
+// Employees
+Route::get('/accounts/employee', 'AccountsController@employeeIndex')->name('accounts.employee.index')->middleware('servicedesk');
+Route::post('/accounts/employee', 'AccountsController@employeeSearch')->name('accounts.employee.search')->middleware('servicedesk');
+Route::get('/accounts/employee/{account}', 'AccountsController@employeeShow')->name('accounts.employee.show')->middleware('servicedesk');
 
-Route::get('/accounts/consultants/create', 'AccountsController@create')->name('accounts.consultants.create');
-Route::get('/accounts/consultants/{account}', 'AccountsController@show')->name('accounts.consultants.show');
-Route::post('/accounts/consultants', 'AccountsController@store')->name('accounts.consultants.store');
-Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update');
-Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete');
+// Consultants
+Route::get('/accounts/consultants', 'AccountsController@consultantIndex')->name('accounts.consultants.index')->middleware('systemadmin');
+Route::get('/accounts/consultants/create', 'AccountsController@create')->name('accounts.consultants.create')->middleware('systemadmin');
+Route::get('/accounts/consultants/{account}', 'AccountsController@show')->name('accounts.consultants.show')->middleware('systemadmin');
+Route::get('/accounts/consultants/{account}/task', 'AccountsController@createTask')->name('accounts.consultants.task')->middleware('systemadmin');
+Route::post('/accounts/consultants', 'AccountsController@store')->name('accounts.consultants.store')->middleware('systemadmin');
+Route::post('/accounts/consultants/{account}/task', 'AccountsController@storeTask')->name('accounts.consultants.storeTask')->middleware('systemadmin');
+Route::post('/accounts/consultants/search', 'AccountsController@consultantSearch')->name('accounts.consultants.search')->middleware('systemadmin');
+Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update')->middleware('systemadmin');
+Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete')->middleware('systemadmin');
 
-Route::get('/logs', 'SamsLogController@index')->name('logs.index');
+// Customers
+Route::get('/settings/customer', 'CustomersController@index')->name('settings.customer.index')->middleware('admin');
+Route::get('/settings/customer/create', 'CustomersController@create')->name('settings.customer.create')->middleware('admin');
+Route::get('/settings/customer/{customer}/edit', 'CustomersController@edit')->name('settings.customer.edit')->middleware('admin');
+Route::post('/settings/customer', 'CustomersController@store')->name('settings.customer.store')->middleware('admin');
+Route::patch('/settings/customer/{customer}', 'CustomersController@update')->name('settings.customer.patch')->middleware('admin');
+
+// Logs
+Route::get('/logs', 'SamsLogController@index')->name('logs.index')->middleware('admin');

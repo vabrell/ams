@@ -82,7 +82,7 @@ if($("#startDate").val())
 
     var newDate = new Date(date);
     var minDate = getDate(newDate.setDate(newDate.getDate() + 1));
-    var maxDate = getDate(newDate.setDate(newDate.getDate() + 367));
+    var maxDate = getDate(newDate.setDate(newDate.getDate() + 33));
 
     $("#endDate").attr({
         'disabled': false,
@@ -98,7 +98,7 @@ $("#startDate").change(function(){
     {
         var newDate = new Date(date);
         var minDate = getDate(newDate.setDate(newDate.getDate() + 1));
-        var maxDate = getDate(newDate.setDate(newDate.getDate() + 367));
+        var maxDate = getDate(newDate.setDate(newDate.getDate() + 33));
 
         $("#endDate").attr({
             'disabled': false,
@@ -114,11 +114,4 @@ $("#startDate").change(function(){
             'max': '',
         }).val('');
     }
-});
-
-$("#localAccount").val() === '1' ? $("#localAccount").prop('checked', true) : $("#localAccount").val(0);
-$("#isEdu").val() === '1' ? $("#isEdu").prop('checked', true) : $("#isEdu").val(0);
-
-$(":checkbox").change(function(){
-    $(this).is(':checked') ? $(this).val(1) : $(this).val(0);
 });

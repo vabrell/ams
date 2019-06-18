@@ -25,7 +25,10 @@
                     @if (!empty($user))
 
                         <div class="modal fade" id="pwd" tabindex="-1" role="dialog" aria-labelledby="pwdLabel" aria-hidden="true">
-                            <form method="POST" action="{{ route('accounts.employee.resetpwd', $user->samaccountname[0]) }}">
+                            <form method="POST" action="{{ route('accounts.resetpwd',[
+                                                            'account' => $user->samaccountname[0],
+                                                            'type' => 'employee'
+                                                        ]) }}">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
@@ -89,7 +92,10 @@
                             </div>
 
                             <div class="col-1">
-                                <form method="POST" action="{{ route('accounts.employee.unlock', $user->samaccountname[0]) }}">
+                                <form method="POST" action="{{ route('accounts.unlock', [
+                                                                    'account' => $user->samaccountname[0],
+                                                                    'type' => 'employee'
+                                                                ]) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-success" @if($user->getLockoutTime() < 1) disabled @endif>
                                         <i class="fas fa-lock-open"></i>
