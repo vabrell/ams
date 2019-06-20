@@ -61,6 +61,11 @@ Route::post('/accounts/consultants/search', 'AccountsController@consultantSearch
 Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update')->middleware('systemadmin');
 Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete')->middleware('systemadmin');
 
+// Reports
+Route::get('/reports', 'ReportsController@index')->name('reports.index')->middleware('systemadmin');
+Route::get('/reports/tasks', 'ReportsController@tasks')->name('reports.tasks.index')->middleware('systemadmin');
+Route::post('/reports/tasks', 'ReportsController@searchTasks')->name('reports.tasks.search')->middleware('systemadmin');
+
 // Settings
 Route::get('/settings', 'HomeController@settings')->name('settings.index')->middleware('admin');
 
