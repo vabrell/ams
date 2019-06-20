@@ -190,9 +190,10 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <p><b>Namn:</b> {{ $account->firstname . ' ' . $account->lastname }}</p>
+                                    <p><b>Namn:</b> {{ $account->fullname }}</p>
                                     <p><b>Mobil:</b> {{ $account->mobile }}</p>
                                     <p><b>Företag:</b> {{ $account->company }}</p>
+                                    <p><b>Företag:</b> {{ $account->email }}</p>
 
                                 </div>
 
@@ -237,6 +238,7 @@
                                         <p><b>Startdatum:</b> {{ $lastTask->startDate }}</p>
                                         <p><b>Slutdatum:</b> {{ $lastTask->endDate }}</p>
                                         <p><b>Beskrivning:</b> {{ $lastTask->description }}</p>
+                                        <p><b>Kund:</b> {{ $lastTask->customer->name }}</p>
                                     @endif
 
 
@@ -266,6 +268,7 @@
                                                     <th scope="col">Startdatum</th>
                                                     <th scope="col">Slutdatum</th>
                                                     <th scope="col">Beskrivning</th>
+                                                    <th scope="col">Kund</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -275,6 +278,7 @@
                                                     <td>{{ $task->startDate }}</td>
                                                     <td>{{ $task->endDate }}</td>
                                                     <td>{{ $task->description }}</td>
+                                                    <td>{{ $task->customer->name }}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
