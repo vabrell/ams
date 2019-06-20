@@ -173,6 +173,20 @@ class AccountsController extends Controller
         return view('accounts.consultants.show', compact('account', 'adAccount', 'servergroups', 'lastTask'));
     }
 
+    public function active()
+    {
+
+        // Get last task for the consultant
+        $tasks = ConsultantTask::where('startDate', '<=', Date('Y-m-d'))
+                                    ->where('endDate', '>', Date('Y-m-d'))
+                                    ->where('completed', 0)
+                                    ->orderBy('startDate')
+                                    ->get();
+
+
+        return view('accounts.consultants.active', compact('tasks'));
+    }
+
     public function createTask(Account $account)
     {
         // Get all customers
