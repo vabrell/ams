@@ -28,4 +28,26 @@ class SamsLogController extends Controller
             'message' => $message
         ]);
     }
+
+    public function search()
+    {
+        // Validate the request
+        request()->validate([
+            'start' => 'required',
+            'end' => 'required|after:start'
+        ],[
+            'start.required' => 'En start period måste väljas.',
+            'end.required' => 'En slut period måste väljas.',
+            'end.after' => 'Slut perioden måste vara efter start perioden.',
+        ]);
+
+        // Get all logs from the searched period
+        $logs = SamsLog::where('created_at', '>=', request()->start)
+                                ->where('created_at', '<', request()->end)
+                                ->orderBy('id', 'desc')
+                                ->paginate('30');
+
+        // Return the user to the tasks report
+        return view('logs.index', compact('logs'));
+    }
 }

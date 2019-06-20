@@ -4,7 +4,43 @@
 <div class="container">
 <div class="card pr-3 pl-3 pt-3">
 
-    @if(auth()->user()->isAdmin())
+    <form method="POST" action="{{ route('logs.search') }}">
+        @csrf
+
+        <div class="form-group row justify-content-center">
+
+            <div class="col-md-4">
+                <input id="start" type="date" class="form-control @error('start') is-invalid @enderror" name="start" value="{{ old('start') }}">
+
+                @error('start')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="col-1">
+                <i class="fas fa-calendar-minus h2"></i>
+            </div>
+
+            <div class="col-4">
+                <input id="end" type="date" class="form-control @error('end') is-invalid @enderror" name="end" value="{{ old('end') }}">
+
+                @error('end')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+    </form>
 
     <table class="table table-striped">
         <thead class="thead-dark">
@@ -33,7 +69,6 @@
 
     {{ $logs->links() }}
 
-    @endif
 </div>
 </div>
 @endsection

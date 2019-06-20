@@ -78,3 +78,4 @@ Route::patch('/settings/customer/{customer}', 'CustomersController@update')->nam
 
 // Logs
 Route::get('/logs', 'SamsLogController@index')->name('logs.index')->middleware('admin');
+Route::post('/logs', 'SamsLogController@search')->name('logs.search')->middleware('admin');
