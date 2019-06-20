@@ -28,4 +28,9 @@ class HomeController extends Controller
 
         return view('home', compact('contractsNoRole'));
     }
+
+    public function settings()
+    {
+        return view('settings.index');
+    }
 }

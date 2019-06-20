@@ -61,6 +61,9 @@ Route::post('/accounts/consultants/search', 'AccountsController@consultantSearch
 Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update')->middleware('systemadmin');
 Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete')->middleware('systemadmin');
 
+// Settings
+Route::get('/settings', 'HomeController@settings')->name('settings.index')->middleware('admin');
+
 // Customers
 Route::get('/settings/customer', 'CustomersController@index')->name('settings.customer.index')->middleware('admin');
 Route::get('/settings/customer/create', 'CustomersController@create')->name('settings.customer.create')->middleware('admin');

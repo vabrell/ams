@@ -17,7 +17,7 @@
 
             @if (auth()->user()->isAdmin())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('settings.customer.index') }}"><i class="fas fa-cogs"></i> {{ __('Inställningar') }}</a>
+                    <a class="nav-link" href="{{ route('settings.index') }}"><i class="fas fa-cogs"></i> {{ __('Inställningar') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logs.index') }}"><i class="fas fa-clipboard-list"></i> {{ __('Loggar') }}</a>
