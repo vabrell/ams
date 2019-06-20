@@ -134,6 +134,7 @@ class AccountsController extends Controller
         $account = Account::orWhere('accountname', 'LIKE', request()->search)
                             ->orWhere('firstname', 'LIKE', request()->search)
                             ->orWhere('lastname', 'LIKE', request()->search)
+                            ->orWhere('fullname', 'LIKE', request()->search)
                             ->orderBy('accountname')
                             ->get();
 
@@ -204,6 +205,7 @@ class AccountsController extends Controller
         $account->fresh()->update([
             'accountname' => 'a2cc' . $this->lastAccountCountPrefix(),
             'title' => 'Konsult - ' . request()->company,
+            'fullname' => request()->firstname . ' ' . request()->lastname,
         ]);
 
         // Create a new Active Directory instance for the user account
@@ -215,7 +217,7 @@ class AccountsController extends Controller
             'title' => $account->fresh()->title,
             'givenname' => $account->fresh()->firstname,
             'sn' => $account->fresh()->lastname,
-            'displayname' => 'A2 ' . $account->firstname . ' ' . $account->lastname,
+            'displayname' => 'A2 ' . $account->fresh()->fullname,
             'description' => $account->fresh()->title,
             'extensionattribute7' => $account->fresh()->mobile,
             'mail' => $account->fresh()->email
