@@ -85,11 +85,14 @@
 
                         <div class="row">
 
-                            <div class="col-1 offset-lg-10">
-                                <button type="button" id="showPwd" class="btn btn-primary" data-toggle="modal" data-target="#pwd">
-                                    <i class="fas fa-key"></i>
-                                </button>
-                            </div>
+                            <div class="col-3 offset-lg-8">
+                                    <button type="button" id="showPwd" class="btn btn-primary" data-toggle="modal" data-target="#pwd">
+                                        <i class="fas fa-key"></i>
+                                    </button>
+                                    <a href="https://hemligt.soltakab.se" class="btn btn-primary" target="_blank">
+                                        Skicka lösenord säkert
+                                    </a>
+                                </div>
 
                             <div class="col-1">
                                 <form method="POST" action="{{ route('accounts.unlock', [

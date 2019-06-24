@@ -3,8 +3,12 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
 
-            @if (auth()->user()->isServicedesk() ?? auth()->user()->isSystemAdmin())
+            @if (auth()->user()->isServicedesk())
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('accounts.index') }}"><i class="fas fa-user"></i> {{ __('Konton') }}</a>
+                </li>
+			@elseif(auth()->user()->isSystemAdmin())
+				<li class="nav-item">
                     <a class="nav-link" href="{{ route('accounts.index') }}"><i class="fas fa-user"></i> {{ __('Konton') }}</a>
                 </li>
             @endif
@@ -23,12 +27,18 @@
 
             @if (auth()->user()->isAdmin())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logs.index') }}"><i class="fas fa-clipboard-list"></i> {{ __('Loggar') }}</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('settings.index') }}"><i class="fas fa-cogs"></i> {{ __('Inställningar') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logs.index') }}"><i class="fas fa-clipboard-list"></i> {{ __('Loggar') }}</a>
+                </li>
             @endif
+
+            <li class="nav-item">
+				<a class="nav-link" href="https://soltakab.sharepoint.com/:w:/s/MIM/EQyr7VbdRKNMmjlglwSIWugB3HTEtx2ZElADYWlYJRTwlg?e=fZRhkK" target="_blank">
+					<i class="fas fa-book"></i> Dokumentation
+				</a>
+			</li>
         </ul>
     @endauth
 
