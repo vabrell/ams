@@ -345,6 +345,98 @@ class AccountsController extends Controller
     }
 
 
+    /* # Students # */
+
+    /* Kungälv */
+
+    public function studentsKKIndex()
+    {
+        // Set ldap to null
+        $ldap = null;
+
+        // Return view for AD account search
+        return view('accounts.students.kk.index', compact('ldap'));
+    }
+
+    public function studentsKKSearch()
+    {
+        // Validate the request
+        request()->validate([
+            'search' => 'required|min:3'
+        ],[
+            'search.required' => 'Sökfältet måste fyllas i',
+            'search.min' => 'Sökfältet måste innehålla minst :min tecken',
+        ]);
+
+        // Get ldap results
+        $ldap = Adldap::search()->users()->setDn('OU=EDU Kungälv,OU=Hosting,DC=vkis,DC=se')
+            ->select('samaccountname', 'displayname', 'department', 'physicaldeliveryofficename')
+            ->orWhereStartsWith('samaccountname', request()->search)
+            ->orWhereContains('displayname', request()->search)
+            ->get();
+
+        Arr::sort($ldap);
+
+        // Return view with results
+        return view('accounts.students.kk.index', compact('ldap'));
+
+    }
+
+    public function studentsKKShow($account)
+    {
+        // Get the user
+        $user = Adldap::search()->users()->setDn('OU=EDU Kungälv,OU=Hosting,DC=vkis,DC=se')->find($account);
+
+        // Return view with results
+        return view('accounts.students.kk.show', compact('user'));
+
+    }
+
+    /* Lilla Edet */
+
+    public function studentsLEIndex()
+    {
+        // Set ldap to null
+        $ldap = null;
+
+        // Return view for AD account search
+        return view('accounts.students.le.index', compact('ldap'));
+    }
+
+    public function studentsLESearch()
+    {
+        // Validate the request
+        request()->validate([
+            'search' => 'required|min:3'
+        ],[
+            'search.required' => 'Sökfältet måste fyllas i',
+            'search.min' => 'Sökfältet måste innehålla minst :min tecken',
+        ]);
+
+        // Get ldap results
+        $ldap = Adldap::search()->users()->setDn('OU=EDU Lilla Edet,OU=Hosting,DC=vkis,DC=se')
+            ->select('samaccountname', 'displayname', 'department', 'physicaldeliveryofficename')
+            ->orWhereStartsWith('samaccountname', request()->search)
+            ->orWhereContains('displayname', request()->search)
+            ->get();
+
+        Arr::sort($ldap);
+
+        // Return view with results
+        return view('accounts.students.le.index', compact('ldap'));
+
+    }
+
+    public function studentsLEShow($account)
+    {
+        // Get the user
+        $user = Adldap::search()->users()->setDn('OU=EDU Lilla Edet,OU=Hosting,DC=vkis,DC=se')->find($account);
+
+        // Return view with results
+        return view('accounts.students.le.show', compact('user'));
+
+    }
+
 
     /* # Helpers # */
 

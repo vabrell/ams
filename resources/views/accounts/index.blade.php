@@ -14,15 +14,24 @@
                         </div>
                     @endif
 
-                    @if (auth()->user()->isServicedesk())
+                    @if (auth()->user()->isSchoolAdmin())
                         <h3>Active directory</h3>
                         <div class="row">
-                            <div class="col-4">
-                                <a href="{{ route('accounts.employee.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Anställd</a>
-                            </div>
-                            <div class="col-4">
-                                <a href="" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Elever</a>
-                            </div>
+                            @if (auth()->user()->isServiceDesk())
+                                <div class="col-4">
+                                    <a href="{{ route('accounts.employee.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Anställd</a>
+                                </div>
+                            @endif
+                            @if (auth()->user()->isSchoolAdminKK())
+                                <div class="col-4">
+                                    <a href="{{ route('accounts.students.kk.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Kungälv elever</a>
+                                </div>
+                            @endif
+                            @if (auth()->user()->isSchoolAdminLE())
+                                <div class="col-4">
+                                    <a href="{{ route('accounts.students.le.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Lilla Edet elever</a>
+                                </div>
+                            @endif
                         </div>
                     @endif
 

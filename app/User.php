@@ -73,6 +73,30 @@ class User extends Authenticatable
         return $this->ldap->inGroup(env('SERVICEDESK_ACCESS_GROUP'));
     }
 
+    public function isSchoolAdmin()
+    {
+        if($this->isSchoolAdminKK() || $this->isSchoolAdminLE())
+            return true;
+
+        return false;
+    }
+
+    public function isSchoolAdminKK()
+    {
+        if($this->isAdmin() || $this->isServicedesk())
+            return true;
+
+        return $this->ldap->inGroup(env('SCHOOLADMINKK_ACCESS_GROUP'));
+    }
+
+    public function isSchoolAdminLE()
+    {
+        if($this->isAdmin() || $this->isServicedesk())
+            return true;
+
+        return $this->ldap->inGroup(env('SCHOOLADMINLE_ACCESS_GROUP'));
+    }
+
     /* # Relationships # */
     public function logs()
     {

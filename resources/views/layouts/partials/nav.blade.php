@@ -3,12 +3,8 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav mr-auto">
 
-            @if (auth()->user()->isServicedesk())
+            @if (auth()->user()->isServicedesk() || auth()->user()->isSystemAdmin() || auth()->user()->isSchoolAdmin())
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('accounts.index') }}"><i class="fas fa-user"></i> {{ __('Konton') }}</a>
-                </li>
-			@elseif(auth()->user()->isSystemAdmin())
-				<li class="nav-item">
                     <a class="nav-link" href="{{ route('accounts.index') }}"><i class="fas fa-user"></i> {{ __('Konton') }}</a>
                 </li>
             @endif
@@ -34,11 +30,13 @@
                 </li>
             @endif
 
-            <li class="nav-item">
-				<a class="nav-link" href="https://soltakab.sharepoint.com/:w:/s/MIM/EQyr7VbdRKNMmjlglwSIWugB3HTEtx2ZElADYWlYJRTwlg?e=fZRhkK" target="_blank">
-					<i class="fas fa-book"></i> Dokumentation
-				</a>
-			</li>
+            @if (auth()->user()->isServicedesk() || auth()->user()->isSystemAdmin() || auth()->user()->isHR())
+                <li class="nav-item">
+                    <a class="nav-link" href="https://soltakab.sharepoint.com/:w:/s/MIM/EQyr7VbdRKNMmjlglwSIWugB3HTEtx2ZElADYWlYJRTwlg?e=fZRhkK" target="_blank">
+                        <i class="fas fa-book"></i> Dokumentation
+                    </a>
+                </li>
+            @endif
         </ul>
     @endauth
 

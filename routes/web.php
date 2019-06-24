@@ -61,6 +61,14 @@ Route::post('/accounts/consultants/search', 'AccountsController@consultantSearch
 Route::patch('/accounts/consultants/{account}', 'AccountsController@update')->name('accounts.consultants.update')->middleware('systemadmin');
 Route::delete('/accounts/consultants/{account}', 'AccountsController@destroy')->name('accounts.consultants.delete')->middleware('systemadmin');
 
+// Students
+Route::get('/accounts/students/kk', 'AccountsController@studentsKKIndex')->name('accounts.students.kk.index')->middleware('schooladminkk');
+Route::post('/accounts/students/kk', 'AccountsController@studentsKKSearch')->name('accounts.students.kk.search')->middleware('schooladminkk');
+Route::get('/accounts/students/kk/{account}', 'AccountsController@studentsKKShow')->name('accounts.students.kk.show')->middleware('schooladminkk');
+Route::get('/accounts/students/le', 'AccountsController@studentsLEIndex')->name('accounts.students.le.index')->middleware('schooladminle');
+Route::post('/accounts/students/le', 'AccountsController@studentsLESearch')->name('accounts.students.le.search')->middleware('schooladminle');
+Route::get('/accounts/students/le/{account}', 'AccountsController@studentsLEShow')->name('accounts.students.le.show')->middleware('schooladminle');
+
 // Reports
 Route::get('/reports', 'ReportsController@index')->name('reports.index')->middleware('systemadmin');
 Route::get('/reports/tasks', 'ReportsController@tasks')->name('reports.tasks.index')->middleware('systemadmin');
