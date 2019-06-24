@@ -13,7 +13,7 @@
                         @method('patch')
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('Avtals namn') }}</label>
+                            <label for="name" class="col-md-2 col-form-label text-md-right">{{ __('Roll namn') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name ?? old('name') }}" >
