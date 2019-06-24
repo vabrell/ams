@@ -15,7 +15,7 @@ class ServiceDesk
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
+        if(!auth()->user()->isServicedesk())
         {
             return redirect(route('home'))->withErrors(['badRequest' => 'Du har inte tillräckliga rättigheter för sidan som försökte nås']);
         }
