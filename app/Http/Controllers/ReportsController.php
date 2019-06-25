@@ -40,7 +40,11 @@ class ReportsController extends Controller
                                 ->where('startDate', '<', request()->end)
                                 ->get();
 
+        // Set period dates
+        $start = request()->start;
+        $end = request()->end;
+
         // Return the user to the tasks report
-        return view('reports.tasks.index', compact('tasks'));
+        return view('reports.tasks.index', compact('tasks', 'start', 'end'));
     }
 }

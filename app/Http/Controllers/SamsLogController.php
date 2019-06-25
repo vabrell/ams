@@ -41,13 +41,20 @@ class SamsLogController extends Controller
             'end.after' => 'Slut perioden måste vara efter start perioden.',
         ]);
 
+        // Set end as DateTime
+        $_end = new \DateTime(request()->end);
+
         // Get all logs from the searched period
         $logs = SamsLog::where('created_at', '>=', request()->start)
-                                ->where('created_at', '<', request()->end)
+                                ->where('created_at', '<=', $_end->modify('+1 day'))
                                 ->orderBy('id', 'desc')
                                 ->paginate('30');
 
+        // Set period dates
+        $start = request()->start;
+        $end = request()->end;
+
         // Return the user to the tasks report
-        return view('logs.index', compact('logs'));
+        return view('logs.index', compact('logs', 'start', 'end'));
     }
 }

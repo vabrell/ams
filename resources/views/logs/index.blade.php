@@ -42,6 +42,22 @@
 
     </form>
 
+    <div class="row justify-content-center">
+
+        <div class="col-4 offset-1 h4 row justify-content-center">
+            <div>
+                @if(!empty($start)){{ $start }}@endif
+            </div>
+        </div>
+
+        <div class="col-4 h4 row justify-content-center">
+            @if(!empty($end)){{ $end }}@endif
+        </div>
+
+        <div class="offset-2"></div>
+
+    </div>
+
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
