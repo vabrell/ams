@@ -73,11 +73,18 @@ class AccountsController extends Controller
 
         // Get the users direct reports
         $directreports = [];
+        $consultants = [];
+
         if($user->directreports != null)
         {
             foreach($user->directreports as $report)
             {
-                array_push($directreports, Adldap::search()->users()->findByDn($report));
+                $_directreport = Adldap::search()->users()->findByDn($report);
+
+                    if($_directreport->employeetype[0] == 'Anställd')
+                        array_push($directreports, $_directreport);
+                    if($_directreport->employeetype[0] == 'Konsult')
+                        array_push($consultants, $_directreport);
             }
         }
 
@@ -100,7 +107,7 @@ class AccountsController extends Controller
         }
 
         // Return view with results
-        return view('accounts.employee.show', compact('user', 'manager', 'directreports', 'groups', 'applications'));
+        return view('accounts.employee.show', compact('user', 'manager', 'directreports', 'consultants', 'groups', 'applications'));
 
     }
 

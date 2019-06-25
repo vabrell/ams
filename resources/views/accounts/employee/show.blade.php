@@ -214,9 +214,28 @@
                                 <div id="employees" class="collapse" aria-labelledby="employees" data-parent="#accordion">
                                     <div class="card-body">
                                         @foreach ($directreports as $directreport)
-                                            @if ($directreport->employeetype[0] == "Anställd")
-                                                <p><a href="{{ route('accounts.employee.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
-                                            @endif
+                                            <p><a href="{{ route('accounts.employee.show', $directreport->samaccountname[0])}}">{{ $directreport->displayname[0] }}</a></p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if (!empty($consultants))
+                            <div class="card">
+                                <button class="btn p-0"
+                                            type="button"
+                                            data-toggle="collapse"
+                                            data-target="#consultants"
+                                            aria-controls="consultants">
+                                    <div class="card-header">
+                                        Konsulter
+                                    </div>
+                                </button>
+                                <div id="consultants" class="collapse" aria-labelledby="consultants" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @foreach ($consultants as $consultant)
+                                            <p><a href="{{ route('accounts.employee.show', $consultant->samaccountname[0])}}">{{ $consultant->displayname[0] }}</a></p>
                                         @endforeach
                                     </div>
                                 </div>

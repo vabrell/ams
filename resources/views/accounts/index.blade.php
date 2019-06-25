@@ -36,13 +36,13 @@
                     @endif
 
                     @if (auth()->user()->isSystemAdmin())
-                        <h3 class="mt-4">Konsult</h3>
+                        <h3 class="mt-4">Externa konsulter</h3>
                         <div class="row">
                             <div class="col-4">
                                 <a href="{{ route('accounts.consultants.create') }}" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Beställ konsult</a>
                             </div>
                             <div class="col-4">
-                                <a href="{{ route('accounts.consultants.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Konsulter</a>
+                                <a href="{{ route('accounts.consultants.index') }}" class="btn btn-primary btn-block"><i class="fas fa-search"></i> Sök</a>
                             </div>
                             <div class="col-4">
                                 <a href="{{ route('accounts.consultants.active') }}" class="btn btn-primary btn-block"><i class="fas fa-briefcase"></i> Pågående uppgifter</a>
