@@ -36,8 +36,8 @@ class ReportsController extends Controller
         ]);
 
         // Get all tasks from the searched period
-        $tasks = ConsultantTask::where('startDate', '>=', request()->start)
-                                ->where('startDate', '<', request()->end)
+        $tasks = ConsultantTask::where('startDate', '<=', Date('Y-m-d'))
+                                ->where('endDate', '>', Date('Y-m-d'))
                                 ->get();
 
         // Set period dates
