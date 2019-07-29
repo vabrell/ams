@@ -52,6 +52,7 @@ Route::get('/accounts/employee/{account}', 'AccountsController@employeeShow')->n
 // Consultants
 Route::get('/accounts/consultants', 'AccountsController@consultantIndex')->name('accounts.consultants.index')->middleware('systemadmin');
 Route::get('/accounts/consultants/create', 'AccountsController@create')->name('accounts.consultants.create')->middleware('systemadmin');
+Route::get('/accounts/consultants/{account}/edit', 'AccountsController@edit')->name('accounts.consultants.edit')->middleware('systemadmin');
 Route::get('/accounts/consultants/active', 'AccountsController@active')->name('accounts.consultants.active')->middleware('systemadmin');
 Route::get('/accounts/consultants/{account}', 'AccountsController@show')->name('accounts.consultants.show')->middleware('systemadmin');
 Route::get('/accounts/consultants/{account}/task', 'AccountsController@createTask')->name('accounts.consultants.task')->middleware('systemadmin');

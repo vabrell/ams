@@ -185,8 +185,13 @@
                     <div class="row mt-3">
                             <div class="col-lg-4 col-md-6">
 
-                                <div class="card-header rounded border-secondary">
-                                    <div class="pt-1">Konsultuppgifter</div>
+                                <div class="card-header rounded border-secondary d-flex align-items-baseline">
+                                    <div class="col-10">
+                                        Konsultuppgifter
+                                    </div>
+                                    <div class="col-1">
+                                        <a href="{{ route('accounts.consultants.edit', $account->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                    </div>
                                 </div>
                                 <div class="card-body">
 

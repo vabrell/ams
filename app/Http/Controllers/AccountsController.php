@@ -180,6 +180,12 @@ class AccountsController extends Controller
         return view('accounts.consultants.show', compact('account', 'adAccount', 'servergroups', 'lastTask'));
     }
 
+    public function edit(Account $account)
+    {
+        // Return the user to the edit user view
+        return view('accounts.consultants.edit', compact('account'));
+    }
+
     public function active()
     {
 
@@ -322,7 +328,42 @@ class AccountsController extends Controller
     public function update(Account $account)
     {
         // Update the account after validation
-        $account->update($this->validateRequest());
+        $account->update(request()->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required',
+            'company' => 'required',
+            ],[
+            'firstname.required' => 'Förnamn måste fyllas i',
+            'lastname.required' => 'Efternamn måste fyllas i',
+            'email.required' => 'E-post måste fyllas i',
+            'email.email' => 'E-psot måste vara i ett giltigt e-post format',
+            'mobile.required' => 'Mobil måste fyllas i',
+            'company.required' => 'Ett konsultbolag måste fyllas i',
+            ])
+        );
+
+        // Update title and fullname in database
+        $account->update([
+            'title' => 'Konsult - ' . request()->company,
+            'fullname' => request()->firstname . ' ' . request()->lastname,
+        ]);
+
+        // Get account in Active Directory
+        $adAccount = Adldap::search()->find($account->accountname);
+
+        // Update attributes
+        $adAccount->title = $account->fresh()->title;
+        $adAccount->givenname = $account->fresh()->firstname;
+        $adAccount->sn = $account->fresh()->lastname;
+        $adAccount->displayname = 'A2 ' . $account->fresh()->fullname;
+        $adAccount->description = $account->fresh()->title;
+        $adAccount->extensionattribute7 = $account->fresh()->mobile;
+        $adAccount->mail = $account->fresh()->email;
+
+        // Save the change to Active Directory
+        $adAccount->save();
 
         // Create log message
         $logMessage = "En ändring för  <b>" . $account->fullname() . "</b> har utförts";
