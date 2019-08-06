@@ -86,9 +86,9 @@ Route::post('/settings/customer', 'CustomersController@store')->name('settings.c
 Route::patch('/settings/customer/{customer}', 'CustomersController@update')->name('settings.customer.patch')->middleware('admin');
 
 // Import
-Route::get('/settings/import', 'ImportsController@index')->name('settings.import.index');
-Route::get('/settings/import/{account}', 'ImportsController@show')->name('settings.import.show');
-Route::post('/settings/import', 'ImportsController@store')->name('settings.import.store');
+Route::get('/settings/import', 'ImportsController@index')->name('settings.import.index')->middleware('admin');
+Route::get('/settings/import/{account}', 'ImportsController@show')->name('settings.import.show')->middleware('admin');
+Route::post('/settings/import', 'ImportsController@store')->name('settings.import.store')->middleware('admin');
 
 // Logs
 Route::get('/logs', 'SamsLogController@index')->name('logs.index')->middleware('admin');
