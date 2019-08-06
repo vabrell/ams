@@ -9,10 +9,6 @@ use App\Http\Controllers\NeptuneContractsController;
 
 class NeptuneRolesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function show(NeptuneRole $role)
     {

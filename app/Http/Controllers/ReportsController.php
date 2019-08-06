@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
+
     public function index()
     {
         // Return the user to the reports index

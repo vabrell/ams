@@ -17,10 +17,6 @@ use Adldap\Models\Attributes\AccountControl;
 
 class AccountsController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware(['auth']);
-    }
 
     public function index()
     {
@@ -138,10 +134,10 @@ class AccountsController extends Controller
         ]);
 
         // Get ldap results
-        $account = Account::orWhere('accountname', 'LIKE', request()->search)
-                            ->orWhere('firstname', 'LIKE', request()->search)
-                            ->orWhere('lastname', 'LIKE', request()->search)
-                            ->orWhere('fullname', 'LIKE', request()->search)
+        $account = Account::orWhere('accountname', 'LIKE', '%' . request()->search . '%')
+                            ->orWhere('firstname', 'LIKE', '%' . request()->search . '%')
+                            ->orWhere('lastname', 'LIKE', '%' . request()->search . '%')
+                            ->orWhere('fullname', 'LIKE', '%' . request()->search . '%')
                             ->orderBy('accountname')
                             ->get();
 

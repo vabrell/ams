@@ -9,10 +9,6 @@ use App\Http\Controllers\SamsLogController;
 
 class NeptuneContractsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function show(NeptuneContract $contract)
     {
