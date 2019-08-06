@@ -69,8 +69,8 @@ class ImportsController extends Controller
         // Remove account expire date
         $adAccount->accountExpires = 0;
 
-        // Set account mobile
-        $adAccount->mobile = $account->fresh()->mobile;
+        // Set account ext7
+        $adAccount->extensionattribute7 = $account->fresh()->mobile;
 
         // Set account company
         $adAccount->company = $account->fresh()->company;
