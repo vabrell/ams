@@ -285,7 +285,7 @@ class AccountsController extends Controller
             'name' => 'required',
             'customer_id' => 'required',
             'startDate' => 'required|date|after:yesterday',
-            'endDate' => 'required|date|after:startDate',
+            'endDate' => 'required|date|after:startDate|before_or_equal:' . date('Y-m-d', strtotime(request()->startDate . ' +32 days')),
             'description' => 'required'
             ],[
             'name.required' => 'Aktivitetsnamn måste fyllas i',
@@ -294,6 +294,7 @@ class AccountsController extends Controller
             'startDate.after' => 'Startdatum måste vara idag eller senare',
             'endDate.required' => 'Slutdatum måste välajs',
             'endDate.after' => 'Slutdatum måste vara efter Startdatum',
+			'endDate.before_or_equal' => 'Slutdatum får max vara en månad efter Startdatum',
             'description.required' => 'Beskrivning måste fyllas i',
             ])
         );

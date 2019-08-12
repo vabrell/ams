@@ -49,7 +49,11 @@
                             <label for="startDate" class="col-md-4 col-form-label text-md-right required">{{ __('Startdatum') }}</label>
 
                             <div class="col-md-6">
-                                <input id="startDate" type="date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 months')) }}" class="form-control @error('startDate') is-invalid @enderror" name="startDate" value="{{ old('startDate') }}" >
+                                <input id="startDate" type="date" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime(date('Y-m-d') . ' + 1 months')) }}" class="form-control @error('startDate') is-invalid @enderror" name="startDate" value="{{ old('startDate') }}" aria-describedby="startDateHelpBlock" >
+
+                                <small id="startDateHelpBlock" class="form-text text-muted">
+                                    åååå-mm-dd
+                                </small>
 
                                 @error('startDate')
                                     <span class="invalid-feedback" role="alert">
@@ -63,7 +67,11 @@
                             <label for="endDate" class="col-md-4 col-form-label text-md-right required">{{ __('Slutdatum') }}</label>
 
                             <div class="col-md-6">
-                                <input id="endDate" type="date" class="form-control @error('endDate') is-invalid @enderror" name="endDate" value="{{ old('endDate') }}" disabled>
+                                <input id="endDate" type="date" class="form-control @error('endDate') is-invalid @enderror" name="endDate" value="{{ old('endDate') }}" disabled aria-describedby="endDateHelpBlock" >
+
+                                <small id="endDateHelpBlock" class="form-text text-muted">
+                                    åååå-mm-dd
+                                </small>
 
                                 @error('endDate')
                                     <span class="invalid-feedback" role="alert">
